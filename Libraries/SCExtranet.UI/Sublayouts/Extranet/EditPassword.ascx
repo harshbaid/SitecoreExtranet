@@ -5,21 +5,20 @@
 <div class="editAccount">
 	<div class="formContainer">
         <h3>
-            <Genzyme:StringContent ID="StringContent2" runat="server" ContentPath="/Strings/Extranet/EditAccount/ChangePassword" />
+            <SCExtranet:FormText runat="server" TextKey="SCExtranet.EditAccount.ChangePassword" />
             <asp:HyperLink ID="lnkBack" runat="server">
-                <Genzyme:StringContent ID="StringContent1" runat="server" ContentPath="/Strings/Extranet/EditAccount/Back" DefaultValue="Back to edit account" />
+                <SCExtranet:FormText runat="server" TextKey="SCExtranet.EditAccount.Back" />
             </asp:HyperLink>
         </h3>
 		<div class="required">
 			<asp:Literal ID="ltlMessagePass" runat="server" />
 		</div>
 		<asp:Panel ID="pnlEditPass" runat="server">
-			<Genzyme:GenzymeForm ID="gzEditPass" runat="server" SubmitButtonCssClass="link-submit" InvalidFormMessageText="" SubmitButtonContentPath="/Strings/Extranet/EditAccount/ChangePassword" ValidationGroup="ExtranetEditPass" OnClick="ProcessEditPass">
+			<Project:ProjectForm ID="gzEditPass" runat="server" SubmitButtonCssClass="link-submit" InvalidFormMessageText="" SubmitButtonTextKey="SCExtranet.EditAccount/ChangePassword" ValidationGroup="ExtranetEditPass" OnClick="ProcessEditPass">
 				<asp:TextBox ID="txtPassOld" TextMode="Password" runat="server" LabelStringPath="/Strings/Extranet/EditAccount/PasswordOld" ValidationGroup="ExtranetEditPass" Required="true"  />
 				<asp:TextBox ID="txtPassNew" TextMode="Password" runat="server" LabelStringPath="/Strings/Extranet/EditAccount/PasswordNew" ValidationGroup="ExtranetEditPass" Required="true"  />
 				<asp:TextBox ID="txtPassConfirm" TextMode="Password" runat="server" LabelStringPath="/Strings/Extranet/EditAccount/PasswordNewConfirm" ValidationGroup="ExtranetEditPass" Required="true"  /> 
-			</Genzyme:GenzymeForm>	
+			</Project:ProjectForm>	
 		</asp:Panel>
-    </div>
-	<Genzyme:StringContent ID="StringContent6" runat="server" ContentField="FormFooterContent" />  
+    </div>Z
 </div>

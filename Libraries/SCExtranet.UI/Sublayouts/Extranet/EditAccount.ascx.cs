@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.UI.WebControls;
+using SCExtranet.Lib.Sublayouts.Extranet;
 
 namespace SCExtranet.UI
 {

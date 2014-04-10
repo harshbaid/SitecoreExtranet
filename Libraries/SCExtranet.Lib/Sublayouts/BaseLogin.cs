@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.UI.WebControls;
 using SCExtranet.Lib.Utility;
+using SCExtranet.Lib.Extensions;
 
 namespace SCExtranet.Lib.Sublayouts.Extranet {
 	public abstract class BaseLogin : BaseSublayout {

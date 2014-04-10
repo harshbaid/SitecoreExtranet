@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using SCExtranet.Lib.Sublayouts.Extranet;
 
 namespace SCExtranet.UI {
 	public partial class EditPassword : BaseEditPassword {

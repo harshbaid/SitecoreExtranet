@@ -5,8 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SCExtranet.Lib.Utility.FormText {
-	public interface IFormTextProvider {
+	public class DefaultFormTextProvider : IFormatProvider {
 
-		string GetTextByKey(string TextKey);
+		public string GetTextByKey(string TextKey){
+			return TextKey;//return Sitecore.Configuration.Factory
+		}
 	}
 }

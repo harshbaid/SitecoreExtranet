@@ -59,54 +59,75 @@
     </Compile>
     <Compile Include="Sublayouts\Extranet\EditEmail.ascx.cs">
       <DependentUpon>EditEmail.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Sublayouts\Extranet\EditEmail.ascx.designer.cs">
       <DependentUpon>EditEmail.ascx</DependentUpon>
     </Compile>
     <Compile Include="Sublayouts\Extranet\EditPassword.ascx.cs">
       <DependentUpon>EditPassword.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Sublayouts\Extranet\EditPassword.ascx.designer.cs">
       <DependentUpon>EditPassword.ascx</DependentUpon>
     </Compile>
     <Compile Include="Sublayouts\Extranet\ForgotPassword.ascx.cs">
       <DependentUpon>ForgotPassword.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Sublayouts\Extranet\ForgotPassword.ascx.designer.cs">
       <DependentUpon>ForgotPassword.ascx</DependentUpon>
     </Compile>
     <Compile Include="Sublayouts\Extranet\Login.ascx.cs">
       <DependentUpon>Login.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Sublayouts\Extranet\Login.ascx.designer.cs">
       <DependentUpon>Login.ascx</DependentUpon>
     </Compile>
     <Compile Include="Sublayouts\Extranet\Registration.ascx.cs">
       <DependentUpon>Registration.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Sublayouts\Extranet\Registration.ascx.designer.cs">
       <DependentUpon>Registration.ascx</DependentUpon>
     </Compile>
+    <Compile Include="WebControls\FormText.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Sublayouts\Extranet\AccountNavigation.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
-    <Content Include="Sublayouts\Extranet\EditAccount.ascx" />
-    <Content Include="Sublayouts\Extranet\EditEmail.ascx" />
-    <Content Include="Sublayouts\Extranet\EditPassword.ascx" />
-    <Content Include="Sublayouts\Extranet\ForgotPassword.ascx" />
-    <Content Include="Sublayouts\Extranet\Login.ascx" />
-    <Content Include="Sublayouts\Extranet\Registration.ascx" />
+    <Content Include="Sublayouts\Extranet\EditAccount.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="Sublayouts\Extranet\EditEmail.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="Sublayouts\Extranet\EditPassword.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="Sublayouts\Extranet\ForgotPassword.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="Sublayouts\Extranet\Login.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="Sublayouts\Extranet\Registration.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Config\Include\" />
+    <Folder Include="Utility\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SCExtranet.Lib\SCExtranet.Lib.csproj">
       <Project>{8a791607-ff45-4ab9-9294-7926f7b2a8e8}</Project>
       <Name>SCExtranet.Lib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App_Config\Include\SCExtranet.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

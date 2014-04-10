@@ -78,6 +78,9 @@
     </Compile>
     <Compile Include="Utility\ExtranetSecurity.cs" />
     <Compile Include="Utility\ExtranetSession.cs" />
+    <Compile Include="Utility\FormText\DefaultFormTextProvider.cs" />
+    <Compile Include="Utility\FormText\FormTextUtility.cs" />
+    <Compile Include="Utility\FormText\IFormTextProvider.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

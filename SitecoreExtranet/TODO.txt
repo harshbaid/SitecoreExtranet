@@ -1,0 +1,10 @@
+﻿
+
+remove  all the ID="StringContent... attributes
+add a wrapping css class around all forms
+replace the <Project:ProjectForm with a div and submit button and validation group
+implement the form text provider and get strings from there
+change textbox label strings from attributes to actual labels
+convert GetStringContent to FormText 
+replace the Constants.TemplateNames with the values from the config
+replace the SitecoreUtility and SitecoreUtility.ProcessLink(

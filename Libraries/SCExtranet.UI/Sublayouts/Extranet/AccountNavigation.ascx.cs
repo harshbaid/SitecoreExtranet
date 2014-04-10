@@ -12,6 +12,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using SCExtranet.Lib.Utility;
 using System.Collections.Specialized;
+using SCExtranet.Lib.Sublayouts.Extranet;
 
 namespace SCExtranet.UI
 {

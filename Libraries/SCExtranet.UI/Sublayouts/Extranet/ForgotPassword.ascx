@@ -7,7 +7,7 @@
         <asp:Literal ID="ltlMessage" runat="server" />
     </div>
 	<asp:PlaceHolder ID="phFPForm" runat="server">
-		<Project:ProjectForm ID="ForgotPasswordForm" runat="server" SubmitButtonCssClass="link-submit" SubmitButtonContentPath="/Strings/Extranet/ForgotPassword/ResetPassword" ValidationGroup="ExtranetForgot" OnClick="ProcessSubmit">
+		<Project:ProjectForm ID="ForgotPasswordForm" runat="server" SubmitButtonCssClass="link-submit" SubmitButtonTextKey="SCExtranet.ForgotPassword.ResetPassword" ValidationGroup="ExtranetForgot" OnClick="ProcessSubmit">
 			<asp:TextBox ID="txtUser" runat="server" LabelStringPath="/Strings/Extranet/ForgotPassword/Username" ValidationGroup="ExtranetForgot" Required="true"  />
 			
 		</Project:ProjectForm>
@@ -15,11 +15,9 @@
 	<div >
 		<p></p>
 		<a href="<%= LoginURL%>">
-			<Project:StringContent ID="StringContent1" runat="server" ContentPath="/Strings/Extranet/Login/Login" />
+			<SCExtranet:FormText runat="server" TextKey="SCExtranet.Login.Login" />
 		</a> | <asp:HyperLink ID="lnkRegister" runat="server">
-			<Project:StringContent ID="StringContent2" runat="server" ContentPath="/Strings/Extranet/Login/Register" />
+			<SCExtranet:FormText runat="server" TextKey="SCExtranet.Login.Register" />
         </asp:HyperLink>
 	</div>
-	<br />
-	<Project:StringContent ID="StringContent3" runat="server" ContentField="FormFooterContent" />  
 </div>

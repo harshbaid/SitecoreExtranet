@@ -3,6 +3,7 @@ using System.Web;
 using System.Web.UI.WebControls;
 using SCExtranet.Lib.Utility;
 using Sitecore.Security.Accounts;
+using SCExtranet.Lib.Extensions;
 
 namespace SCExtranet.Lib.Sublayouts.Extranet {
 	public abstract class BaseForgotPassword : BaseSublayout {
