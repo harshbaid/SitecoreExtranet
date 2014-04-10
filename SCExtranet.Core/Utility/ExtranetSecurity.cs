@@ -45,7 +45,7 @@ namespace SCExtranet.Core.Utility
 				Item home = SitecoreUtility.GetSiteStartItem();
 				if (home == null)
 					return null;
-				return home.ChildByTemplate(Constants.ExtranetPageIDs.ExtranetFolder);
+				return home.ChildByTemplateID(Constants.ExtranetPageIDs.ExtranetFolder);
 			}
 		}
 
@@ -54,7 +54,7 @@ namespace SCExtranet.Core.Utility
 				Item ExFolder = ExtranetFolder;
 				if (ExFolder == null)
 					return null;
-				return ExFolder.ChildByTemplate(Constants.ExtranetPageIDs.EditAccountPage);
+				return ExFolder.ChildByTemplateID(Constants.ExtranetPageIDs.EditAccountPage);
 			}
 		}
 
@@ -69,7 +69,7 @@ namespace SCExtranet.Core.Utility
 				Item ExFolder = ExtranetFolder;
 				if (ExFolder == null)
 					return null;
-				Item RP = ExFolder.ChildByTemplate(Constants.ExtranetPageIDs.RegisterPage);
+				Item RP = ExFolder.ChildByTemplateID(Constants.ExtranetPageIDs.RegisterPage);
 				return (RP == null) ? string.Empty : GetPageURL(RP);
 			}
 		}
@@ -79,7 +79,7 @@ namespace SCExtranet.Core.Utility
 				Item ExFolder = ExtranetFolder;
 				if (ExFolder == null)
 					return null;
-				Item FP = ExFolder.ChildByTemplate(Constants.ExtranetPageIDs.ForgotPasswordPage);
+				Item FP = ExFolder.ChildByTemplateID(Constants.ExtranetPageIDs.ForgotPasswordPage);
 				return (FP == null) ? string.Empty : GetPageURL(FP);
 			}
 		}

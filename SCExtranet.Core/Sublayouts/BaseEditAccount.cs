@@ -16,7 +16,7 @@ namespace SCExtranet.Core.Sublayouts.Extranet {
 		protected abstract HyperLink PassLink { get; }
 
 		protected string GetURL(string template) {
-			Item p = PreferredDataSource.ChildByTemplate(template);
+			Item p = PreferredDataSource.ChildByTemplateID(template);
 			return (p != null) ? SitecoreUtility.GetItemURL(p) : string.Empty;
 		}
 
