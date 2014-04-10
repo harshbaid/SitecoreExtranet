@@ -17,7 +17,7 @@ namespace SCExtranet.Core.Wizards.ExtranetSetupWizard {
 		}
 
 		public static class Paths {
-			public static readonly string Branches = "/sitecore/templates/Branches";
+			public static readonly string Branches = "/sitecore/templates/Modules/Extranet/Branches";
 			public static readonly string Sites = "/sitecore/system/Sites";
 		}
 

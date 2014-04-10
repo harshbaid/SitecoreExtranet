@@ -5,11 +5,13 @@ using System.Text;
 using SCExtranet.Core.Extensions;
 using SCExtranet.Core.Utility;
 using Sitecore;
+using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Globalization;
 using Sitecore.Jobs;
 using Sitecore.SecurityModel;
+using Sitecore.Web;
 using Sitecore.Web.UI.HtmlControls;
 
 namespace SCExtranet.Core.Wizards.ExtranetSetupWizard {
@@ -26,10 +28,9 @@ namespace SCExtranet.Core.Wizards.ExtranetSetupWizard {
 		/// <returns>A message indicating the status of the action</returns>
 		public override void CoreExecute(Dictionary<string, object> data) {
 
-			string siteID = InputData.Get<string>(Constants.Keys.Site);
-			Item SiteItem = MasterDB.GetItem(siteID);
-			string siteName = SiteItem["name"];
-
+			string siteName = InputData.Get<string>(Constants.Keys.Site);
+			SiteInfo SiteItem = Factory.GetSiteInfo(siteName);
+			
 			IEnumerable<ListItem> langs = InputData.Get<IEnumerable<ListItem>>(Constants.Keys.Languages);
 			IEnumerable<Language> selectedLangs = (from val in MasterDB.Languages
 													where langs.Any(a => a.Value.Equals(val.Name))
@@ -61,7 +62,7 @@ namespace SCExtranet.Core.Wizards.ExtranetSetupWizard {
 
 		#region Build Chunks
 
-		protected Item BuildExtranetPages(Item siteItem, IEnumerable<Language> selectedLangs) {
+		protected Item BuildExtranetPages(SiteInfo siteItem, IEnumerable<Language> selectedLangs) {
 			LangCur = 1;
 			LangTotal = selectedLangs.Count();
 			Item extranetFolder = null;
@@ -78,7 +79,7 @@ namespace SCExtranet.Core.Wizards.ExtranetSetupWizard {
 						//status
 						BuildJob.Status.Messages.Add(string.Format("Building {0} content from branch.", targetLang.CultureInfo.DisplayName));
 
-						Item HomeItem = MasterDB.GetItem(siteItem["startItem"]);
+						Item HomeItem = MasterDB.GetItem(siteItem.StartItem);
 						extranetFolder = HomeItem.Add("extranet", extranetBranch);
 
 						PublishContent(extranetFolder, true);
@@ -110,9 +111,9 @@ namespace SCExtranet.Core.Wizards.ExtranetSetupWizard {
 			return extranetFolder;
 		}
 
-		protected void CreateRole(Item siteItem) {
+		protected void CreateRole(SiteInfo siteItem) {
 			//setup roles
-			string roleName = string.Format("extranet\\{0} Extranet", siteItem["name"]);
+			string roleName = string.Format("extranet\\{0} Extranet", siteItem.Name);
 			CreateRole(roleName);
 		}
 
@@ -134,41 +135,53 @@ namespace SCExtranet.Core.Wizards.ExtranetSetupWizard {
 			return loginPage;
 		}
 
-		protected void UpdateSite(Item siteItem, Item loginPage) {
+		protected void UpdateSite(SiteInfo siteItem, Item loginPage) {
 
-			string siteName = siteItem["name"];
+			string siteName = siteItem.Name;
 
-			using (new EditContext(siteItem)) {
-				//set login url on the site node
-				siteItem["loginPage"] = string.Format("{0}.aspx", loginPage.Paths.ContentPath.Replace(string.Format("/{0}/Home", siteName), ""));
-			}
+			//if you've got the multisite manager installed then you'll handle this differently
+			if (false) {
+				//setup site drop downs
+				Item sFolder = this.db.GetItem(Constants.Paths.Sites);
+				if (sFolder == null)
+					return;
+				IEnumerable<ListItem> sites = Sitecore.Configuration.Factory.GetSitesInfo();
+					from val in sFolder.Axes.GetDescendants().Where(el => el.Template.IsID(Constants.TemplateIDs.Site))
+				
+				using (new EditContext(siteItem)) {
+					//set login url on the site node
+					siteItem["loginPage"] = string.Format("{0}.aspx", loginPage.Paths.ContentPath.Replace(string.Format("/{0}/Home", siteName), ""));
+				}
 
-			//set extranet user prefix attributes on site node: ExtranetUserPrefix and ExtranetRole 
-			string saIDstr = Constants.TemplateIDs.SiteAttribute;
-			if(Sitecore.Data.ID.IsID(saIDstr)){
-				ID saID = null;
-				if (ID.TryParse(saIDstr, out saID)) {
-					TemplateItem sa = MasterDB.GetItem(saID);
-					if (sa != null) {
-						Item uPrefix = siteItem.Add("ExtranetUserPrefix", sa);
-						if (uPrefix != null) {
-							using (new EditContext(uPrefix)) {
-								uPrefix["Value"] = string.Format("{0}_", siteName);
+				//set extranet user prefix attributes on site node: ExtranetUserPrefix and ExtranetRole 
+				string saIDstr = Constants.TemplateIDs.SiteAttribute;
+				if (Sitecore.Data.ID.IsID(saIDstr)) {
+					ID saID = null;
+					if (ID.TryParse(saIDstr, out saID)) {
+						TemplateItem sa = MasterDB.GetItem(saID);
+						if (sa != null) {
+							Item uPrefix = siteItem.Add("ExtranetUserPrefix", sa);
+							if (uPrefix != null) {
+								using (new EditContext(uPrefix)) {
+									uPrefix["Value"] = string.Format("{0}_", siteName);
+								}
+								CleanupList.Add(uPrefix);
 							}
-							CleanupList.Add(uPrefix);
-						}
-						Item roleName = siteItem.Add("ExtranetRole", sa);
-						if (roleName != null) {
-							using (new EditContext(roleName)) {
-								roleName["Value"] = string.Format("{0} Extranet", siteName);
+							Item roleName = siteItem.Add("ExtranetRole", sa);
+							if (roleName != null) {
+								using (new EditContext(roleName)) {
+									roleName["Value"] = string.Format("{0} Extranet", siteName);
+								}
+								CleanupList.Add(roleName);
 							}
-							CleanupList.Add(roleName);
 						}
 					}
 				}
-			}
 
-			PublishContent(siteItem, true);
+				PublishContent(siteItem, true);
+			} else {
+
+			}
 		}
 
 		#endregion Build Chunks

@@ -7,6 +7,7 @@ using Sitecore.Data.Items;
 using SCExtranet.Core.Extensions;
 using Sitecore.Web.UI.HtmlControls;
 using Sitecore.Globalization;
+using Sitecore.Web;
 
 namespace SCExtranet.Core.Wizards.ExtranetSetupWizard.Pages {
 	public class SelectSitePage : BasePage {
@@ -93,7 +94,7 @@ namespace SCExtranet.Core.Wizards.ExtranetSetupWizard.Pages {
 				IEnumerable<string> others = new List<string> { 
 					SummaryStr(Constants.Keys.ExtranetBranch, db.GetItem(ExtranetBranch.Value).Name),							 
 					SummaryStr(Constants.Keys.PublishContent, PublishContent.Checked.ToString()),
-					SummaryStr(Constants.Keys.Site, db.GetItem(SiteItem.Value).Name)
+					SummaryStr(Constants.Keys.Site, SiteItem.Value)
 				};
 				
 				return langTitle.Concat(langs).Concat(others);		
@@ -133,13 +134,10 @@ namespace SCExtranet.Core.Wizards.ExtranetSetupWizard.Pages {
 			ExtranetBranchDC.Folder = Constants.ItemIDs.Branches;
 
 			//setup site drop downs
-			Item sFolder = this.db.GetItem(Constants.Paths.Sites);
-			if (sFolder == null)
-				return;
-			IEnumerable<ListItem> sites =
-				from val in sFolder.Axes.GetDescendants().Where(el => el.Template.IsID(Constants.TemplateIDs.Site))
+			IEnumerable<ListItem> sites = 
+				from val in Sitecore.Configuration.Factory.GetSiteInfoList()
 				orderby val.Name
-				select new ListItem() { ID = Control.GetUniqueID("I"), Header = val.DisplayName, Value = val.ID.ToString(), Selected = false };
+				select new ListItem() { ID = Control.GetUniqueID("I"), Header = val.Name, Value = val.Name, Selected = false };
 
 			foreach (ListItem s in sites) {
 				Sitecore.Context.ClientPage.AddControl(SiteItem, s);

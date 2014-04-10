@@ -135,10 +135,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App_Config\Include\SCExtranet.config" />
+    <None Include="packages\SCExtranet-package.zip" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy /Y "$(ProjectDir)\App_Config\Include\SCExtranet.config" "$(SolutionDir)\App_Config\Include\SCExtranet.config"
+copy /Y "$(ProjectDir)\packages\SCExtranet-package.zip" "$(SolutionDir)\data\packages\SCExtranet-package.zip"
 start xcopy /Y "$(ProjectDir)\sitecore modules\Sublayouts\*" "$(SolutionDir)\sitecore modules\web\extranet\"
 start xcopy  /S /Y "$(ProjectDir)\sitecore modules\Wizards\*" "$(SolutionDir)\sitecore modules\shell\extranet\"</PostBuildEvent>
   </PropertyGroup>
