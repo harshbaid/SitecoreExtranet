@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<control xmlns:def="Definition" xmlns:content="http://www.sitecore.net/content">
+	<SetSecurityPage def:inherits="SCExtranet.Core.Wizards.ExtranetSetupWizard.Pages.SetSecurityPage,SCExtranet.Core">
+		<GridPanel Width="100%" Style="display:none">
+			<SCEWizardPageHeader GridPanel.Class="scWizardHeader" Header="$Header" Text="$Text" Icon="$Icon"/>
+			<SCEWizardPageDivider/>
+			
+			<DataContext ID="PageDC"/>
+
+			<Groupbox Header="Page">
+				<GridPanel Columns="2">
+					<Literal GridPanel.ColSpan="2" ID="PageErrorMessage" Class="ErrorMessage" Visible="false" Style="color:red" />
+
+					<Label For="PageTree">
+						<span class="asterisk">*</span>Choose a page to add the login page to:
+					</Label>
+					<TreePicker ID="PageTree" DataContext="PageDC" ToolTip="Selects the page that will have the extranet login page added as a child."/>
+				</GridPanel>
+			</Groupbox>
+
+		</GridPanel>
+	</SetSecurityPage>
+</control>

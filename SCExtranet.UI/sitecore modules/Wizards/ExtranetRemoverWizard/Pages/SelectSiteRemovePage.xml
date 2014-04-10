@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<control xmlns:def="Definition" xmlns:content="http://www.sitecore.net/content">
+	<SelectSiteRemovePage def:inherits="SCExtranet.Core.Wizards.ExtranetRemoverWizard.Pages.SelectSiteRemovePage,SCExtranet.Core">
+		<GridPanel Width="100%" Style="display:none">
+			<SCEWizardPageHeader GridPanel.Class="scWizardHeader" Header="$Header" Text="$Text" Icon="$Icon"/>
+			<SCEWizardPageDivider/>
+
+			<Groupbox Header="Site">
+				<GridPanel Columns="2">
+					<Label For="SiteItem">
+						<span class="asterisk">*</span>Choose a Site:
+					</Label>
+					<Combobox ID="SiteItem" ToolTip="Selects the site that will have the extranet security removed." />
+				</GridPanel>
+			</Groupbox>
+
+		</GridPanel>
+	</SelectSiteRemovePage>
+</control>

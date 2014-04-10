@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<control xmlns:def="Definition" xmlns:content="http://www.sitecore.net/content">
+	<ExtranetRemoverWizard>
+		<WizardForm CodeBeside="SCExtranet.Core.Wizards.ExtranetRemoverWizard.WizardCore,SCExtranet.Core">
+			<Stylesheet Src="/sitecore modules/shell/SitecoreWizards/css/wizard.css"/>
+
+			<WizardFormFirstPage ID="FirstPage" Icon="Applications/48x48/magic-wand.png">
+				<Border Class="scWizardWelcomeTitle">
+					<Literal Text="Extranet Setup Wizard"/>
+				</Border>
+				<Literal Text="This wizard will guide you through setting up a Extranet settings for a web site."/>
+			</WizardFormFirstPage>
+
+			<!-- Extranet Remover Pages -->
+
+			<SelectSiteRemovePage ID="SitePage"
+				PageName="Site Selection"
+				Header="Select the site"
+				Text="Please choose which site to remove the security from."
+				Icon="Software/32x32/text_code.png"/>
+
+			<!-- End Extranet Remover Pages -->
+
+			<WizardFormPage ID="SummaryPage"
+				Header="Summary"
+				Text="Please confirm your choices before continuing."
+				Icon="Applications/48x48/magic-wand.png">
+				<Scrollbox Border="none" Background="transparent">
+					<Groupbox ID="ChoicesPanel" Header="Your Configuration Choices">
+						<Border Padding="4" >
+							<Literal ID="Choices" Text="You have selected the following settings:"/>
+						</Border>
+					</Groupbox>
+				</Scrollbox>
+			</WizardFormPage>
+
+			<WizardFormPage ID="ProcessPage"
+				Header="Setup Extranet"
+				Text="Please wait while the extranet is being created and configured"
+				Icon="People/32x32/Box_Software.png">
+				<WizardFormIndent>
+					<Edit ID="HandleId" Hidden="True"/>
+					<GridPanel ID="ProcessDetails" CellPadding="10">
+						<Groupbox Header="Remove Extranet Pages">
+							<Border>
+								<Literal ID="step1Message" Text=" "/>
+							</Border>
+							<Border>
+								<Literal ID="step1Status"/>
+							</Border>
+						</Groupbox>
+						<Groupbox Header="Remove Security">
+							<Border>
+								<Literal ID="step2Message" Text=" "/>
+							</Border>
+							<Border>
+								<Literal ID="step2Status"/>
+							</Border>
+						</Groupbox>
+					</GridPanel>
+				</WizardFormIndent>
+			</WizardFormPage>
+
+			<WizardFormLastPage ID="LastPage" Icon="Applications/48x48/magic-wand.png">
+				<Scrollbox Border="none" Background="transparent">
+					<Border Padding="4">
+						<Literal ID="FinalMessage" Text="The wizard has completed."/>
+					</Border>
+				</Scrollbox>
+			</WizardFormLastPage>
+
+		</WizardForm>
+	</ExtranetRemoverWizard>
+</control>
