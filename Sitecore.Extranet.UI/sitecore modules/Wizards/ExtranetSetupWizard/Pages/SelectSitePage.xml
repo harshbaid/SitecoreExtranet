@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<control xmlns:def="Definition" xmlns:content="http://www.sitecore.net/content">
+	<SelectSitePage def:inherits="Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard.Pages.SelectSitePage,Sitecore.Extranet.Core">
+		<GridPanel Width="100%" Style="display:none">
+			<SCEWizardPageHeader GridPanel.Class="scWizardHeader" Header="$Header" Text="$Text" Icon="$Icon"/>
+			<SCEWizardPageDivider/>
+			
+			<Groupbox Header="Site">
+				<GridPanel Columns="2">
+					<Label For="SiteItem">
+						<span class="asterisk">*</span>Choose a Site:
+					</Label>
+					<Combobox ID="SiteItem" ToolTip="Selects the site that will have the extranet security applied." />
+				</GridPanel>
+			</Groupbox>
+
+			<DataContext ID="ExtranetBranchDC"/>
+
+			<Groupbox Header="Branch Settings">
+				<GridPanel Columns="2">
+					<Literal GridPanel.ColSpan="2" ID="BranchErrorMessage" Class="ErrorMessage" Visible="false" Style="color:red" />
+					
+					<Label For="ExtranetBranch">
+						<span class="asterisk">*</span>Extranet Branch:
+					</Label>
+					<TreePicker ID="ExtranetBranch" DataContext="ExtranetBranchDC" ToolTip="Is the branch that is used to create the extranet for the new site."/>
+				</GridPanel>
+			</Groupbox>
+
+			<Groupbox Header="Localization Settings (optional)">
+				<GridPanel Columns="2">
+					<Literal GridPanel.ColSpan="2" ID="LangErrorMessage" Class="ErrorMessage" Visible="false" Style="color:red" />
+
+					<Label For="LanguageList">
+						<span class="asterisk">*</span>Languages:
+					</Label>
+					<Listbox ID="LanguageList" Multiple="true" size="10" ToolTip="Used to create content in this language and set allowed languages for site."/>
+				</GridPanel>
+			</Groupbox>
+
+			<Groupbox Header="Publish Options">
+				<GridPanel Columns="2">
+					<Label For="PublishContent">Should the extranet pages be published: </Label>
+					<Checkbox ID="PublishContent" Class="checkbox" ToolTip="Will determine if the extranet pages created will be automatically published."/>
+				</GridPanel>
+			</Groupbox>
+
+		</GridPanel>
+	</SelectSitePage>
+</control>
