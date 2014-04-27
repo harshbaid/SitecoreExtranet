@@ -1,13 +1,15 @@
-﻿fieldset { margin: 10px 10px; }
+﻿.scBottomEdge,
+.scTopEdge { display:block; }
+.scDivider { }
+	.scDivider tr { height:1px; display:block; }
+fieldset { margin: 10px 10px; }
 	fieldset td { vertical-align:top; }
 fieldset tr { margin-bottom:7px; display:block; }
 fieldset label { width:140px; display:block; text-align:right; margin-right:10px; line-height:20px; }
 fieldset input { width:200px; }
 fieldset select { width:305px; }
 fieldset input.checkbox { width:auto; }
-table#Settings > tbody > tr,
-table#Language > tbody > tr,
-table#Security > tbody > tr { margin-bottom:10px;}
+select#LanguageList { height:50px; }
 .scWizardHeader { height:64px; }
 span.asterisk { color:#ff0000; display:inline-block; margin-right:3px; }
 span.value { color:#ff0000; }

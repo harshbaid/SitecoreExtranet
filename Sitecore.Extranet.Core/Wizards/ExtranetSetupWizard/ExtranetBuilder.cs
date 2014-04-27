@@ -193,7 +193,7 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard {
 				fc.AppendLine("	</sitecore>");
 				fc.AppendLine("</configuration>");
 				
-				FileUtility.MakeFile(string.Format("/App_Config/Include/Sitecore.Extranet.sites.{0}.config", siteName), fc.ToString());
+				FileUtility.MakeFile(string.Format(Constants.FilePatterns.ExtranetSiteConfig, siteName), fc.ToString());
 			}
 		}
 

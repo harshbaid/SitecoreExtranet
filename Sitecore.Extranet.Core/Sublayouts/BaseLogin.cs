@@ -3,6 +3,7 @@ using System.Web.UI.WebControls;
 using Sitecore.Extranet.Core.Utility;
 using Sitecore.Extranet.Core.Extensions;
 using Sitecore.Extranet.Core.Utility.FormText;
+using System.Web.Security;
 
 namespace Sitecore.Extranet.Core.Sublayouts.Extranet {
 	public abstract class BaseLogin : BaseSublayout {
@@ -101,6 +102,9 @@ namespace Sitecore.Extranet.Core.Sublayouts.Extranet {
 					try {
 						Sitecore.Security.Domains.Domain domain = Sitecore.Context.Domain;
 						string domainUser = domain.Name + @"\" + ExtranetSecurity.ExtranetUserPrefix() + username;
+
+						Membership.Providers["SiteA"].ValidateUser(domainUser, password);
+
 						if (Sitecore.Security.Authentication.AuthenticationManager.Login(domainUser, password, false)) {
 							//if you pass the login attempt but you're not logged in, that means there's no security attached to your user.
 							if (ExtranetSecurity.IsLoggedIn()) {

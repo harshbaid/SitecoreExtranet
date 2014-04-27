@@ -7,6 +7,8 @@
 			
 			<Groupbox Header="Site">
 				<GridPanel Columns="2">
+					<Literal GridPanel.ColSpan="2" ID="SiteErrorMessage" Class="ErrorMessage" Visible="false" Style="color:red" />
+
 					<Label For="SiteItem">
 						<span class="asterisk">*</span>Choose a Site:
 					</Label>
@@ -16,7 +18,7 @@
 
 			<DataContext ID="ExtranetBranchDC"/>
 
-			<Groupbox Header="Branch Settings">
+			<Groupbox Header="Branch Selection">
 				<GridPanel Columns="2">
 					<Literal GridPanel.ColSpan="2" ID="BranchErrorMessage" Class="ErrorMessage" Visible="false" Style="color:red" />
 					

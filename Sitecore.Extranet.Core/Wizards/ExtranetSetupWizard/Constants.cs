@@ -21,6 +21,10 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard {
 			public static readonly string Sites = "/sitecore/system/Sites";
 		}
 
+		public static class FilePatterns {
+			public static readonly string ExtranetSiteConfig = "/App_Config/Include/Sitecore.Extranet.sites.{0}.config";
+		}
+
 		public static class ItemIDs {
 			public static readonly string Branches = "{BAD98E0E-C1B5-4598-AC13-21B06218B30C}";
 		}

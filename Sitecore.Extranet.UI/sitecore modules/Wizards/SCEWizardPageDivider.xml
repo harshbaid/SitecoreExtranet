@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <control xmlns:def="Definition" xmlns:content="http://www.sitecore.net/content">
 	<SCEWizardPageDivider>
-		<GridPanel Width="100%">
+		<GridPanel Width="100%" Class="scDivider">
 			<Space GridPanel.Class="scBottomEdge"/>
 			<Space GridPanel.Class="scTopEdge"/>
 		</GridPanel>

@@ -8,11 +8,13 @@ using Sitecore.Extranet.Core.Extensions;
 using Sitecore.Web.UI.HtmlControls;
 using Sitecore.Globalization;
 using Sitecore.Web;
+using Sitecore.IO;
 
 namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard.Pages {
 	public class SelectSitePage : BasePage {
 
 		#region Controls
+		protected Literal SiteErrorMessage;
 		protected Combobox SiteItem;
 		protected Literal LangErrorMessage;
 		protected DataContext ExtranetBranchDC;
@@ -39,7 +41,12 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard.Pages {
 
 				BranchErrorMessage.Visible = false;
 				LangErrorMessage.Visible = false;
-				
+
+				if (FileUtil.FileExists(string.Format(Constants.FilePatterns.ExtranetSiteConfig, SiteItem.Name))) { //need to check if the site already has an extranet				
+					valid = false;
+					SiteErrorMessage.Visible = true;
+				}
+
 				if (!ValidateBranch()) {
 					valid = false;
 					BranchErrorMessage.Visible = true;
@@ -114,6 +121,12 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard.Pages {
 			}
 		}
 
+		public static IEnumerable<string> sysSites {
+			get {
+				return new List<string> { "shell", "login", "admin", "service", "modules_shell", "modules_website", "scheduler", "system", "publisher" };
+			}
+		}
+
 		#endregion Properties
 
 		#region Page Load
@@ -136,6 +149,7 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard.Pages {
 			//setup site drop downs
 			IEnumerable<ListItem> sites = 
 				from val in Sitecore.Configuration.Factory.GetSiteInfoList()
+				where !sysSites.Contains(val.Name)
 				orderby val.Name
 				select new ListItem() { ID = Control.GetUniqueID("I"), Header = val.Name, Value = val.Name, Selected = false };
 

@@ -2,7 +2,7 @@
 <control xmlns:def="Definition" xmlns:content="http://www.sitecore.net/content">
 	<ExtranetRemoverWizard>
 		<WizardForm CodeBeside="Sitecore.Extranet.Core.Wizards.ExtranetRemoverWizard.WizardCore,Sitecore.Extranet.Core">
-			<Stylesheet Src="/sitecore modules/shell/SitecoreWizards/css/wizard.css"/>
+			<Stylesheet Src="/sitecore modules/shell/extranet/css/wizard.css"/>
 
 			<WizardFormFirstPage ID="FirstPage" Icon="Applications/48x48/magic-wand.png">
 				<Border Class="scWizardWelcomeTitle">
