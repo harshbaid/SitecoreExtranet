@@ -5,6 +5,7 @@ using System.Text;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Extranet.Core.Extensions;
+using Sitecore.Sites;
 using Sitecore.Web.UI.HtmlControls;
 
 namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard.Pages {
@@ -74,20 +75,23 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard.Pages {
 
 		private void InitializeControl() {
 
-			//setup branch drop downs by setting the datacontext for each control 
-			PageDC.GetFromQueryString();
+			SetDataContext();
 		}
 
 		public void SetDataContext() {
-			if(PreviousPage != null) {
-				string pID = (string)PreviousPage.DataDictionary.Where(a => a.Key.Equals(Constants.Keys.Site)).First().Value;
-				Item site = db.GetItem(pID);
-				if(site != null) {
-					string homePath = site["startItem"];
-					PageDC.Root = homePath;
-					PageDC.Folder = homePath;
-				}
-			}
+			
+			PageDC.GetFromQueryString();
+			
+			if (PreviousPage == null) 
+				return;
+
+			string siteName = (string)PreviousPage.DataDictionary.Where(a => a.Key.Equals(Constants.Keys.Site)).First().Value;
+			SiteContext sc = Configuration.Factory.GetSite(siteName);
+			if(sc == null)
+				return;
+
+			PageDC.Root = sc.StartPath;
+			PageDC.Folder = sc.StartPath;
 		}
 
 		#endregion Page Load
