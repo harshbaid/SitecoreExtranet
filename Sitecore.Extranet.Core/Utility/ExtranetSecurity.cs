@@ -30,6 +30,15 @@ namespace Sitecore.Extranet.Core.Utility
 			return (n.HasKey("ExtranetRole")) ? n["ExtranetRole"] : "";
 		}
 
+		public static bool HasExtranetProvider() {
+			return (!string.IsNullOrEmpty(ExtranetProvider()));
+		}
+
+		public static string ExtranetProvider() {
+			NameValueCollection n = Sitecore.Context.Site.Properties;
+			return (n.HasKey("ExtranetProvider")) ? n["ExtranetProvider"] : "";
+		}
+
 		public static string QSMessKey = "message";
 
 		#endregion Extranet Info

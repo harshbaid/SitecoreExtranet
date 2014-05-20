@@ -12,6 +12,7 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard {
 			public static readonly string ExtranetBranch = "ExtranetBranch";
 			public static readonly string Languages = "Languages";
 			public static readonly string Page = "Page";
+			public static readonly string SecProvider = "SecProvider";
 			public static readonly string PublishContent = "PublishContent";
 			public static readonly string Site = "Site";
 		}
