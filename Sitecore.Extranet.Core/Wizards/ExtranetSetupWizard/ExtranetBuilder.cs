@@ -26,7 +26,7 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard {
 		/// </summary>
 		/// <param name="data">Contains parameters to configure the construction. See Lookup.Parameters for detailed information.</param>
 		/// <returns>A message indicating the status of the action</returns>
-		public override void CoreExecute(Dictionary<string, object> data) {
+		public override void CoreExecute() {
 
 			string siteName = InputData.Get<string>(Constants.Keys.Site);
 			SiteInfo SiteItem = Factory.GetSiteInfo(siteName);
@@ -138,6 +138,7 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard {
 		protected void UpdateSite(SiteInfo siteInfo, Item loginPage) {
 
 			string siteName = siteInfo.Name;
+			string loginUrl = string.Format("{0}.aspx", loginPage.Paths.ContentPath.Replace(string.Format("/{0}/Home", siteName), ""));
 
 			//if you've got the multisite manager installed then you'll handle this differently
 			Item sFolder = MasterDB.GetItem(Constants.Paths.Sites);
@@ -150,7 +151,7 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard {
 				
 				using (new EditContext(siteItem)) {
 					//set login url on the site node
-					siteItem["loginPage"] = string.Format("{0}.aspx", loginPage.Paths.ContentPath.Replace(string.Format("/{0}/Home", siteName), ""));
+					siteItem["loginPage"] = loginUrl;
 				}
 
 				//set extranet user prefix attributes on site node: ExtranetUserPrefix and ExtranetRole 
@@ -174,6 +175,13 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard {
 								}
 								CleanupList.Add(roleName);
 							}
+							Item providerName = siteItem.Add("ExtranetProvider", sa);
+							if (providerName != null) {
+								using (new EditContext(providerName)) {
+									providerName["Value"] = InputData.Get<string>(Constants.Keys.SecProvider);
+								}
+								CleanupList.Add(providerName);
+							}
 						}
 					}
 				}
@@ -185,9 +193,10 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard {
 				fc.AppendLine("	<sitecore>");
 				fc.AppendLine("		<sites>");
 				fc.AppendFormat("			<site name=\"{0}\">", siteName).AppendLine();
-				fc.AppendFormat("				<patch:attribute name=\"loginPage\">{0}</patch:attribute>", "").AppendLine();
-				fc.AppendFormat("				<patch:attribute name=\"ExtranetUserPrefix\">{0}</patch:attribute>", "").AppendLine();
-				fc.AppendFormat("				<patch:attribute name=\"ExtranetRole\">{0}</patch:attribute>", "").AppendLine();
+				fc.AppendFormat("				<patch:attribute name=\"loginPage\">{0}</patch:attribute>", loginUrl).AppendLine();
+				fc.AppendFormat("				<patch:attribute name=\"ExtranetUserPrefix\">{0}_</patch:attribute>", siteName).AppendLine();
+				fc.AppendFormat("				<patch:attribute name=\"ExtranetRole\">{0} Extranet</patch:attribute>", siteName).AppendLine();
+				fc.AppendFormat("				<patch:attribute name=\"ExtranetProvider\">{0}</patch:attribute>", InputData.Get<string>(Constants.Keys.SecProvider)).AppendLine();
 				fc.AppendLine("			</site>");
 				fc.AppendLine("		</sites>");
 				fc.AppendLine("	</sitecore>");

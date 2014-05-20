@@ -16,7 +16,7 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetRemoverWizard {
 
 		#region Start Build
 
-		public override void CoreExecute(Dictionary<string, object> data) {
+		public override void CoreExecute() {
 			
 			string siteID = InputData.Get<string>(Constants.Keys.Site);
 			Item SiteItem = MasterDB.GetItem(siteID);

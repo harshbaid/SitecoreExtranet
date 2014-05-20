@@ -75,7 +75,7 @@ namespace Sitecore.Extranet.Core.Wizards {
 
 			try {
 				using (new SecurityDisabler()) {
-					CoreExecute(data);
+					CoreExecute();
 				}
 				BuildJob.Status.Messages.Add("Finished Successfully");
 			} catch (Exception ex) {
@@ -86,7 +86,7 @@ namespace Sitecore.Extranet.Core.Wizards {
 			}
 		}
 
-		public abstract void CoreExecute(Dictionary<string, object> data);
+		public abstract void CoreExecute();
 
 		#endregion 
 
