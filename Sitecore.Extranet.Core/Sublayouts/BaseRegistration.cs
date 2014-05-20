@@ -63,7 +63,7 @@ namespace Sitecore.Extranet.Core.Sublayouts.Extranet {
 			}
 		}
 
-		protected static bool SetupAccountAndSendEmail(string username, string email, string confirmEmail, string password, string confirmPassword, string fullName, string comment, ref string message) {
+		protected virtual static bool SetupAccountAndSendEmail(string username, string email, string confirmEmail, string password, string confirmPassword, string fullName, string comment, ref string message) {
 
 			bool returnVal = false;
 
@@ -126,7 +126,7 @@ namespace Sitecore.Extranet.Core.Sublayouts.Extranet {
 			return returnVal;
 		}
 
-		protected static bool RegisterUser(Guid userKey) {
+		protected virtual static bool RegisterUser(Guid userKey) {
 
 			MembershipUser newUser = Membership.GetUser(userKey);
 			if (newUser != null) {

@@ -38,7 +38,7 @@ namespace Sitecore.Extranet.Core.Sublayouts.Extranet {
 			}
 		}
 
-		protected static bool UpdatePassword(string oldPassword, string newPassword, ref string message) {
+		protected virtual static bool UpdatePassword(string oldPassword, string newPassword, ref string message) {
 			//get auth helper
 			AuthenticationHelper authHelper = new AuthenticationHelper(Sitecore.Security.Authentication.AuthenticationManager.Provider);
 			try {

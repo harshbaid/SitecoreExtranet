@@ -40,7 +40,7 @@ namespace Sitecore.Extranet.Core.Sublayouts.Extranet {
 			}
 		}
 
-		protected static bool ResetPassAndSendUserAnEmail(string username, ref string message) {
+		protected virtual static bool ResetPassAndSendUserAnEmail(string username, ref string message) {
 			try {
 				if (ExtranetSecurity.HasExtranetUserPrefix()) {
 					string domainUser = Sitecore.Context.Domain.GetFullName(ExtranetSecurity.ExtranetUserPrefix() + username);
