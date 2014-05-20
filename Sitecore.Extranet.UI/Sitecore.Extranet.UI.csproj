@@ -129,7 +129,9 @@
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="sitecore modules\Wizards\css\wizard.css" />
-    <Content Include="sitecore modules\Wizards\ExtranetRemoverWizard\ExtranetRemoverWizard.xml" />
+    <Content Include="sitecore modules\Wizards\ExtranetRemoverWizard\ExtranetRemoverWizard.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="sitecore modules\Wizards\ExtranetRemoverWizard\Pages\SelectSiteRemovePage.xml" />
     <Content Include="sitecore modules\Wizards\ExtranetSetupWizard\ExtranetSetupWizard.xml" />
     <Content Include="sitecore modules\Wizards\ExtranetSetupWizard\Pages\SelectSitePage.xml" />
