@@ -79,7 +79,7 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard {
 						//status
 						BuildJob.Status.Messages.Add(string.Format("Building {0} content from branch.", targetLang.CultureInfo.DisplayName));
 
-						Item HomeItem = MasterDB.GetItem(siteItem.StartItem);
+						Item HomeItem = MasterDB.GetItem(string.Format("{0}{1}", siteItem.RootPath, siteItem.StartItem));
 						extranetFolder = HomeItem.Add("extranet", extranetBranch);
 
 						PublishContent(extranetFolder, true);
@@ -149,41 +149,18 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard {
 					return;
 				Item siteItem = siteRes.First();
 				
-				using (new EditContext(siteItem)) {
-					//set login url on the site node
+				using (new EditContext(siteItem)) //set login url on the site node
 					siteItem["loginPage"] = loginUrl;
-				}
 
 				//set extranet user prefix attributes on site node: ExtranetUserPrefix and ExtranetRole 
-				string saIDstr = Constants.TemplateIDs.SiteAttribute;
-				if (Sitecore.Data.ID.IsID(saIDstr)) {
-					ID saID = null;
-					if (ID.TryParse(saIDstr, out saID)) {
-						TemplateItem sa = MasterDB.GetItem(saID);
-						if (sa != null) {
-							Item uPrefix = siteItem.Add("ExtranetUserPrefix", sa);
-							if (uPrefix != null) {
-								using (new EditContext(uPrefix)) {
-									uPrefix["Value"] = string.Format("{0}_", siteName);
-								}
-								CleanupList.Add(uPrefix);
-							}
-							Item roleName = siteItem.Add("ExtranetRole", sa);
-							if (roleName != null) {
-								using (new EditContext(roleName)) {
-									roleName["Value"] = string.Format("{0} Extranet", siteName);
-								}
-								CleanupList.Add(roleName);
-							}
-							Item providerName = siteItem.Add("ExtranetProvider", sa);
-							if (providerName != null) {
-								using (new EditContext(providerName)) {
-									providerName["Value"] = InputData.Get<string>(Constants.Keys.SecProvider);
-								}
-								CleanupList.Add(providerName);
-							}
-						}
-					}
+				TemplateItem sa = GetItem(Constants.TemplateIDs.SiteAttribute);
+				if (sa != null) {
+					Item uPrefix = siteItem.Add("ExtranetUserPrefix", sa);
+					SetValue(uPrefix, string.Format("{0}_", siteName));
+					Item roleName = siteItem.Add("ExtranetRole", sa);
+					SetValue(roleName, string.Format("{0} Extranet", siteName));
+					Item providerName = siteItem.Add("ExtranetProvider", sa);
+					SetValue(providerName, InputData.Get<string>(Constants.Keys.SecProvider));
 				}
 
 				PublishContent(siteItem, true);
@@ -192,11 +169,11 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard {
 				fc.AppendLine("<configuration xmlns:patch=\"http://www.sitecore.net/xmlconfig/\">");
 				fc.AppendLine("	<sitecore>");
 				fc.AppendLine("		<sites>");
-				fc.AppendFormat("			<site name=\"{0}\">", siteName).AppendLine();
-				fc.AppendFormat("				<patch:attribute name=\"loginPage\">{0}</patch:attribute>", loginUrl).AppendLine();
-				fc.AppendFormat("				<patch:attribute name=\"ExtranetUserPrefix\">{0}_</patch:attribute>", siteName).AppendLine();
-				fc.AppendFormat("				<patch:attribute name=\"ExtranetRole\">{0} Extranet</patch:attribute>", siteName).AppendLine();
-				fc.AppendFormat("				<patch:attribute name=\"ExtranetProvider\">{0}</patch:attribute>", InputData.Get<string>(Constants.Keys.SecProvider)).AppendLine();
+				fc.AppendFormat("		<site name=\"{0}\">", siteName).AppendLine();
+				fc.AppendFormat("			<patch:attribute name=\"loginPage\">{0}</patch:attribute>", loginUrl).AppendLine();
+				fc.AppendFormat("			<patch:attribute name=\"ExtranetUserPrefix\">{0}_</patch:attribute>", siteName).AppendLine();
+				fc.AppendFormat("			<patch:attribute name=\"ExtranetRole\">{0} Extranet</patch:attribute>", siteName).AppendLine();
+				fc.AppendFormat("			<patch:attribute name=\"ExtranetProvider\">{0}</patch:attribute>", InputData.Get<string>(Constants.Keys.SecProvider)).AppendLine();
 				fc.AppendLine("			</site>");
 				fc.AppendLine("		</sites>");
 				fc.AppendLine("	</sitecore>");
@@ -208,7 +185,26 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard {
 
 		#endregion Build Chunks
 
-		#region Publish Helper Methods
+		#region Helper Methods
+
+		protected Item GetItem(string IDstr) {
+			string saIDstr = Constants.TemplateIDs.SiteAttribute;
+			if (!Sitecore.Data.ID.IsID(saIDstr))
+				return null;
+			ID saID = null;
+			if (!ID.TryParse(saIDstr, out saID))
+				return null;
+			return MasterDB.GetItem(saID);	
+		}
+
+		protected void SetValue(Item i, string value) {
+			if (i == null) 
+				return;
+			using (new EditContext(i)) {
+				i["Value"] = value;
+			}
+			CleanupList.Add(i);
+		}
 
 		protected void PublishContent(Item i, bool publishChildren) {
 			//get the value from the settings page of the InputData
@@ -218,6 +214,6 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard {
 			}
 		}
 
-		#endregion Publish Helper Methods
+		#endregion Helper Methods
 	}
 }
