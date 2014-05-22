@@ -88,7 +88,7 @@ namespace Sitecore.Extranet.Core.Sublayouts.Extranet {
 			}
 		}
 
-		protected virtual static bool Login(string username, string password, ref string message) {
+		protected virtual bool Login(string username, string password, ref string message) {
 
 			//if the session is old reset it 
 			if (ExtranetSession.ExpiryDate().CompareTo(DateTime.Now) < 1) {

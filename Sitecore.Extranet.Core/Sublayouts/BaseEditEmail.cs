@@ -46,7 +46,7 @@ namespace Sitecore.Extranet.Core.Sublayouts.Extranet {
 			}
 		}
 
-		public virtual static bool UpdateEmail(string newEmail, ref string message) {
+		public virtual bool UpdateEmail(string newEmail, ref string message) {
 			//get auth helper
 			AuthenticationHelper authHelper = new AuthenticationHelper(Sitecore.Security.Authentication.AuthenticationManager.Provider);
 			try {
