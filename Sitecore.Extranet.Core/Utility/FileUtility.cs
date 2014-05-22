@@ -14,7 +14,7 @@ namespace Sitecore.Extranet.Core.Utility {
 		}
 
 		public static void MakeFile(string file, string contents) {
-			string filePath = string.Format(@"{0}{1}", HttpContext.Current.Request.PhysicalApplicationPath, file);
+			string filePath = string.Format(@"{0}{1}", AppDomain.CurrentDomain.BaseDirectory, file);
 			using (StreamWriter newData = new StreamWriter(filePath, false)) {
 				newData.WriteLine(contents);
 			}
