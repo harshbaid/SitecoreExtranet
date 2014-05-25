@@ -42,6 +42,13 @@ namespace Sitecore.Extranet.Core.Extensions {
 			return sb.ToString();
 		}
 
+		public static Dictionary<string, string> ToDictionary(this NameValueCollection nvc){
+			Dictionary<string, string> retObj = new Dictionary<string, string>();
+			foreach (string key in nvc.Keys)
+				retObj.Add(key, nvc[key].ToString());
+			return retObj;
+		}
+
 		public static Dictionary<K, V> Merge<K, V>(this Dictionary<K, V> target, IEnumerable<KeyValuePair<K, V>> source, bool overwrite) {
 			source.Aggregate(target, (acc, kvp) => {
 				if (!acc.ContainsKey(kvp.Key))

@@ -8,6 +8,8 @@ using Sitecore.Extranet.Core.Extensions;
 using Sitecore.Security.Accounts;
 using System.Web.Security;
 using Sitecore.Extranet.Core.Utility;
+using Sitecore.Web;
+using Sitecore.Configuration;
 
 namespace Sitecore.Extranet.Core.Wizards.ExtranetRemoverWizard {
 	public class ExtranetRemover : BaseLongRunningJob {
@@ -17,33 +19,32 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetRemoverWizard {
 		#region Start Build
 
 		public override void CoreExecute() {
-			
-			string siteID = InputData.Get<string>(Constants.Keys.Site);
-			Item SiteItem = MasterDB.GetItem(siteID);
-			string siteName = SiteItem["name"];
 
+			string siteName = InputData.Get<string>(Constants.Keys.Site);
+			SiteInfo SiteInfo = Factory.GetSiteInfo(siteName);
+			
 			//status
 			SetStatus(1, "Removing extranet pages.");
 
 			//remove extranet pages from branch
-			RemoveExtranetPages(SiteItem);
+			RemoveExtranetPages(SiteInfo);
 
 			//status
 			SetStatus(2, "Removing Security.");
 
 			//remove role and users
-			RemoveRoleAndUsers(SiteItem);
+			RemoveRoleAndUsers(siteName);
 
 			//remove site login settings and attributes
-			UpdateSite(SiteItem);
+			RemoveSiteAttributes(SiteInfo);
 		}
 
 		#endregion Start Build
 
 		#region Action Chunks
 
-		protected void RemoveExtranetPages(Item siteItem){
-			Item HomeItem = MasterDB.GetItem(siteItem["startItem"]);
+		protected void RemoveExtranetPages(SiteInfo siteItem){
+			Item HomeItem = MasterDB.GetItem(string.Format("{0}{1}", siteItem.RootPath, siteItem.StartItem));
 			IEnumerable<Item> pages = HomeItem.Axes.GetDescendants().Where(a => a.Template.IsID(Constants.TemplateIDs.ExtranetFolder) || a.Template.Is(Constants.TempateName.ExtranetLogin));
 			if (pages == null || !pages.Any())
 				return;
@@ -55,37 +56,50 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetRemoverWizard {
 			}
 		}
 
-		protected void RemoveRoleAndUsers(Item siteItem){
+		protected void RemoveRoleAndUsers(string siteName) {
 
 			//remove roles
-			string roleName = string.Format("extranet\\{0} Extranet", siteItem["name"]);
+			string roleName = string.Format("extranet\\{0} Extranet", siteName);
 			if (Role.Exists(roleName)) {
 				Role r = Role.FromName(roleName);
-				
-				IEnumerable<User> users = UserManager.GetUsers().Where(a => a.IsInRole(r));
-				if (users != null && users.Any()) {
-					foreach (User u in users)
-						u.Delete();
+
+				bool removeRole = InputData.Get<bool>(Constants.Keys.RemoveRole);
+				bool removeUsers = InputData.Get<bool>(Constants.Keys.RemoveUsers);
+
+				if (removeUsers) {
+					IEnumerable<User> users = UserManager.GetUsers().Where(a => a.IsInRole(r));
+					if (users != null && users.Any()) {
+						foreach (User u in users)
+							u.Delete();
+					}
 				}
-				
-				Roles.DeleteRole(r.Name);
+
+				if(removeUsers)
+					Roles.DeleteRole(r.Name);
 			}
 		}
 
-		protected void UpdateSite(Item siteItem) {
+		protected void RemoveSiteAttributes(SiteInfo siteInfo) {
 
-			//set login url on the site node
-			using (new EditContext(siteItem)) {
-				siteItem["loginPage"] = string.Empty;
+			
+			Item sFolder = MasterDB.GetItem(Constants.Paths.Sites);
+			if (sFolder != null) {
+				Item siteItem = sFolder.Axes.GetChild(siteInfo.Name);
+				//set login url on the site node
+				using (new EditContext(siteItem)) {
+					siteItem["loginPage"] = string.Empty;
+				}
+				
+				IEnumerable<Item> atts = siteItem.Axes.GetDescendants().Where(a => a.Template.IsID(Constants.TemplateIDs.SiteAttribute));
+				if (atts != null && atts.Any()) {
+					foreach (Item a in atts)
+						a.Recycle();
+				}
+
+				SitecoreUtility.PublishContent(siteItem, true);
+			} else {
+				FileUtility.RemoveFile(string.Format(Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard.Constants.FilePatterns.ExtranetSiteConfig, siteInfo.Name));
 			}
-
-			IEnumerable<Item> atts = siteItem.Axes.GetDescendants().Where(a => a.Template.IsID(Constants.TemplateIDs.SiteAttribute));
-			if (atts != null && atts.Any()) {
-				foreach (Item a in atts)
-					a.Recycle();
-			}
-
-			SitecoreUtility.PublishContent(siteItem, true);
 		}
 
 		#endregion Action Chunks

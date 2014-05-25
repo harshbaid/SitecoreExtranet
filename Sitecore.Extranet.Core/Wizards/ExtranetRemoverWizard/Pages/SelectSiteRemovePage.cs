@@ -7,29 +7,31 @@ using Sitecore.Data.Items;
 using Sitecore.Web.UI.HtmlControls;
 using Sitecore.Extranet.Core.Extensions;
 using Sitecore.Security.Accounts;
+using Sitecore.Extranet.Core.Utility;
+using Sitecore.Web;
+using Sitecore.Configuration;
 
 namespace Sitecore.Extranet.Core.Wizards.ExtranetRemoverWizard.Pages {
 	public class SelectSiteRemovePage : BasePage {
 
 		#region Controls
 		protected Combobox SiteItem;
+		protected Checkbox RemoveRole;
+		protected Checkbox RemoveUsers;
 		#endregion Controls
 
 		#region Properties
 
-		private Database _db;
-		public Database db {
+		protected List<string> Attributes {
 			get {
-				if (_db == null)
-					_db = Sitecore.Configuration.Factory.GetDatabase("master");
-				return _db;
+				return new List<string>() { "ExtranetUserPrefix", "ExtranetRole", "ExtranetProvider" };
 			}
 		}
 
 		public override IEnumerable<string> DataSummary {
 			get {
-				Item si = db.GetItem(SiteItem.Value);
-				string siteName = si["name"];
+				SiteInfo si= Factory.GetSiteInfo(SiteItem.Value);
+				string siteName = SiteItem.Value;
 				
 				yield return SummaryStr(Constants.Keys.Site, siteName);
 
@@ -40,7 +42,7 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetRemoverWizard.Pages {
 				}
 
 				//find the extranet pages 
-				Item HomeItem = db.GetItem(si["startItem"]);
+				Item HomeItem = MasterDB.GetItem(string.Format("{0}{1}", si.RootPath, si.StartItem));
 				if (HomeItem != null) {
 					IEnumerable<Item> pages = HomeItem.Axes.GetDescendants().Where(a => a.Template.IsID(Constants.TemplateIDs.ExtranetFolder) || a.Template.Is(Constants.TempateName.ExtranetLogin));
 					if (pages != null && pages.Any()) {
@@ -50,53 +52,42 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetRemoverWizard.Pages {
 				}
 
 				//find the attributes
-				IEnumerable<Item> atts = si.Axes.GetDescendants().Where(a => a.Template.IsID(Constants.TemplateIDs.SiteAttribute));
+				IEnumerable<KeyValuePair<string,string>> atts = si.Properties.ToDictionary().Where(a => Attributes.Contains(a.Key));
 				if (atts != null && atts.Any()) {
-					foreach (Item a in atts)
-						yield return SummaryStr("Attribute", a.Paths.Path);
+					foreach (KeyValuePair<string, string> a in atts)
+						yield return SummaryStr("Attribute", string.Format("{0} - {1}", a.Key, a.Value));
 				}
-			}
-		}
 
-		protected string SummaryStr(string name, string value) {
-			return string.Format("{0}: <span class='value'>{1}</span>", name, value);
+				yield return SummaryStr(Constants.Keys.RemoveRole, RemoveRole.Checked.ToString());
+				yield return SummaryStr(Constants.Keys.RemoveUsers, RemoveUsers.Checked.ToString());
+			}
 		}
 
 		public override IEnumerable<KeyValuePair<string, object>> DataDictionary {
 			get {
 				yield return new KeyValuePair<string, object>(Constants.Keys.Site, SiteItem.Value);
+				yield return new KeyValuePair<string, object>(Constants.Keys.RemoveRole, RemoveRole.Checked);
+				yield return new KeyValuePair<string, object>(Constants.Keys.RemoveUsers, RemoveUsers.Checked);
 			}
 		}
 
 		#endregion Properties
 
-		#region Page Load
+		#region Initialize
 
-		protected override void OnLoad(EventArgs e) {
-
-			// similar to is not PostBack.
-			if (!Sitecore.Context.ClientPage.IsEvent) {
-				InitializeControl();
-			}
-			base.OnLoad(e);
-		}
-
-		private void InitializeControl() {
+		protected override void InitializeControl() {
 
 			//setup site drop downs
-			Item sFolder = this.db.GetItem(Constants.Paths.Sites);
-			if (sFolder == null)
-				return;
 			IEnumerable<ListItem> sites =
-				from val in sFolder.Axes.GetDescendants().Where(el => el.Template.IsID(Constants.TemplateIDs.Site))
+				from val in Sitecore.Configuration.Factory.GetSiteInfoList()
+				where !SitecoreUtility.SystemSites.Contains(val.Name)
 				orderby val.Name
-				select new ListItem() { ID = Control.GetUniqueID("I"), Header = val.DisplayName, Value = val.ID.ToString(), Selected = false };
+				select new ListItem() { ID = Control.GetUniqueID("I"), Header = val.Name, Value = val.Name, Selected = false };
 
-			foreach (ListItem s in sites) {
+			foreach (ListItem s in sites) 
 				Sitecore.Context.ClientPage.AddControl(SiteItem, s);
-			}
 		}
 
-		#endregion Page Load
+		#endregion Initialize
 	}
 }

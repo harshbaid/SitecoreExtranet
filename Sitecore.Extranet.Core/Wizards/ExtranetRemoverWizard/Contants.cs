@@ -10,6 +10,8 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetRemoverWizard {
 		/// </summary>
 		public static class Keys {
 			public static readonly string Site = "Site";
+			public static readonly string RemoveRole = "RemoveRole";
+			public static readonly string RemoveUsers = "RemoveUsers";
 		}
 
 		public static class Paths {

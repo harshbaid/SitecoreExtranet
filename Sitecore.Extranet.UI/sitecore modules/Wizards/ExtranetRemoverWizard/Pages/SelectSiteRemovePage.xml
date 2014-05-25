@@ -11,6 +11,12 @@
 						<span class="asterisk">*</span>Choose a Site:
 					</Label>
 					<Combobox ID="SiteItem" ToolTip="Selects the site that will have the extranet security removed." />
+
+					<Label For="RemoveRole">Do you want the extranet role removed?: </Label>
+					<Checkbox ID="RemoveRole" Class="checkbox" ToolTip="Will remove the role used by the extranet."/>
+
+					<Label For="RemoveUsers">Do you want the extranet users removed?: </Label>
+					<Checkbox ID="RemoveUsers" Class="checkbox" ToolTip="Will remove the users used by the extranet."/>
 				</GridPanel>
 			</Groupbox>
 
