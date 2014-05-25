@@ -78,7 +78,7 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard.Pages {
 
 		#region Initialize
 
-		protected void InitializeControl() {
+		protected override void InitializeControl() {
 
 			SetDataContext();
 
