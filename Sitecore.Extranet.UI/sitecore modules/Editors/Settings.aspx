@@ -14,9 +14,9 @@
 <body>
     <form id="form1" runat="server">
     <div class="extranetSettings">
-		<div class="message">
-			<asp:Literal ID="ltlMessage" runat="server"></asp:Literal>
-		</div>
+		<asp:Panel ID="pnlMessage" CssClass="message" runat="server">
+			<div>There aren't any websites with an extranet.</div>
+		</asp:Panel>
 		<div class="protectedSites">
 			<asp:Repeater ID="rptSites" runat="server">
 				<ItemTemplate>

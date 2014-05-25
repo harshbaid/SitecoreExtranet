@@ -22,13 +22,13 @@ namespace Sitecore.Extranet.UI {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// ltlMessage control.
+        /// pnlMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltlMessage;
+        protected global::System.Web.UI.WebControls.Panel pnlMessage;
         
         /// <summary>
         /// rptSites control.

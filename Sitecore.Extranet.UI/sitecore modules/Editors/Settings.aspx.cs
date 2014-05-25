@@ -15,10 +15,9 @@ namespace Sitecore.Extranet.UI {
 		protected void Page_Load(object sender, EventArgs e) {
 
 			IEnumerable<SiteInfo> infos = Factory.GetSiteInfoList().Where(a => a.Properties.HasKey("ExtranetRole"));
-			if (!infos.Any()) {
-				ltlMessage.Text = string.Format("<div>{0}</div>", FormTextUtility.Provider.GetTextByKey("/Settings/NoExtranets", Sitecore.Context.ContentDatabase));
+			pnlMessage.Visible = !infos.Any();
+			if (!infos.Any())
 				return;
-			}
 			rptSites.DataSource = infos;
 			rptSites.DataBind();
 		}
