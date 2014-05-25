@@ -2,4 +2,5 @@
 	.message div { border:1px solid #c9c9c9; background:#ffffe4; font-weight:bold; padding:2px 5px; }
 	.protectedSites { }
 		.siteInfo { border:1px solid #ccc; padding:10px; margin-bottom:10px; }
+			.siteInfo h2 { font-size:11pt; margin:0px 0 5px; }
 			.siteInfo span { font-weight:bold; display:inline-block; width: 130px; }

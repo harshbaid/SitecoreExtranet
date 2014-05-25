@@ -21,10 +21,7 @@
 			<asp:Repeater ID="rptSites" runat="server">
 				<ItemTemplate>
 					<div class="siteInfo">
-						<div>
-							<span>Site Name: </span>
-							<%# ((SiteInfo)Container.DataItem).Name %>
-						</div>
+						<h2><%# ((SiteInfo)Container.DataItem).Name %></h2>
 						<div>
 							<span>Extranet User Prefix: </span>
 							<%# ((SiteInfo)Container.DataItem).Properties["ExtranetUserPrefix"] %>
