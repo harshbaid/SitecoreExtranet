@@ -34,7 +34,6 @@ namespace Sitecore.Extranet.Core.Utility {
 			return LinkManager.GetDynamicUrl(i);
 		}
 
-
 		#region Publishing
 
 		public static void SetWorkflowToPublishable(Item i) {
@@ -81,5 +80,15 @@ namespace Sitecore.Extranet.Core.Utility {
 		}
 
 		#endregion Publishing
+
+		#region Sites
+
+		public static IEnumerable<string> SystemSites {
+			get {
+				return new List<string> { "shell", "login", "admin", "service", "modules_shell", "modules_website", "scheduler", "system", "publisher" };
+			}
+		}
+
+		#endregion Sites
 	}
 }
