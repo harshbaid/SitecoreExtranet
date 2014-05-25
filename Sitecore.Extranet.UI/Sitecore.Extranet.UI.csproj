@@ -35,6 +35,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -104,6 +105,7 @@
     <Compile Include="WebControls\FormText.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="sitecore modules\Editors\css\style.css" />
     <Content Include="sitecore modules\Editors\Settings.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
@@ -140,14 +142,15 @@
     <Content Include="sitecore modules\Wizards\SCEWizardPageHeader.xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App_Config\Include\Sitecore.Extranet.config" />
+    <None Include="packages\Sitecore.Extranet-package.zip" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Sitecore.Extranet.Core\Sitecore.Extranet.Core.csproj">
       <Project>{8a791607-ff45-4ab9-9294-7926f7b2a8e8}</Project>
       <Name>Sitecore.Extranet.Core</Name>
+      <Private>False</Private>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App_Config\Include\Sitecore.Extranet.config" />
-    <None Include="packages\Sitecore.Extranet-package.zip" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

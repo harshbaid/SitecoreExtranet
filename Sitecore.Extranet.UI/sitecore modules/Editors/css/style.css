@@ -1,0 +1,5 @@
+﻿.extranetSettings { padding:10px; font:8pt tahoma; }
+	.message div { border:1px solid #c9c9c9; background:#ffffe4; font-weight:bold; padding:2px 5px; }
+	.protectedSites { }
+		.siteInfo { border:1px solid #ccc; padding:10px; margin-bottom:10px; }
+			.siteInfo span { font-weight:bold; display:inline-block; width: 130px; }
