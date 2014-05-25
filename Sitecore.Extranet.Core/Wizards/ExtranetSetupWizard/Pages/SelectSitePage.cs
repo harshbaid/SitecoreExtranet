@@ -9,6 +9,7 @@ using Sitecore.Web.UI.HtmlControls;
 using Sitecore.Globalization;
 using Sitecore.Web;
 using Sitecore.IO;
+using Sitecore.Extranet.Core.Utility;
 
 namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard.Pages {
 	public class SelectSitePage : BasePage {
@@ -25,15 +26,6 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard.Pages {
 		#endregion Controls
 
 		#region Properties
-
-		private Database _db;
-		public Database db {
-			get {
-				if(_db == null)
-					_db = Sitecore.Configuration.Factory.GetDatabase("master");
-				return _db;
-			}
-		}
 
 		public override bool IsValid {
 			get {
@@ -72,7 +64,7 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard.Pages {
 
 			string eID = ExtranetBranch.Value;
 			if (!string.IsNullOrEmpty(eID) && Sitecore.Data.ID.IsID(eID)) { // Content Branch
-				Item ci = db.GetItem(eID);
+				Item ci = MasterDB.GetItem(eID);
 				if (ci == null) {
 					valid = false;
 					sb.Append("The extranet branch item you chose is null.").Append("<br/>");
@@ -99,17 +91,13 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard.Pages {
 											select string.Format("<span class='value'>{0}</span>", li.Header);
 				//get the rest
 				IEnumerable<string> others = new List<string> { 
-					SummaryStr(Constants.Keys.ExtranetBranch, db.GetItem(ExtranetBranch.Value).Name),							 
+					SummaryStr(Constants.Keys.ExtranetBranch, MasterDB.GetItem(ExtranetBranch.Value).Name),							 
 					SummaryStr(Constants.Keys.PublishContent, PublishContent.Checked.ToString()),
 					SummaryStr(Constants.Keys.Site, SiteItem.Value)
 				};
 				
 				return langTitle.Concat(langs).Concat(others);		
 			}
-		}
-
-		protected string SummaryStr(string name, string value) {
-			return string.Format("{0}: <span class='value'>{1}</span>", name, value);
 		}
 
 		public override IEnumerable<KeyValuePair<string, object>> DataDictionary {
@@ -121,26 +109,11 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard.Pages {
 			}
 		}
 
-		public static IEnumerable<string> sysSites {
-			get {
-				return new List<string> { "shell", "login", "admin", "service", "modules_shell", "modules_website", "scheduler", "system", "publisher" };
-			}
-		}
-
 		#endregion Properties
 
-		#region Page Load
+		#region Initialize
 
-		protected override void OnLoad(EventArgs e) {
-
-			// similar to is not PostBack.
-			if (!Sitecore.Context.ClientPage.IsEvent) {
-				InitializeControl();
-			}
-			base.OnLoad(e);
-		}
-
-		private void InitializeControl() {
+		protected override void InitializeControl() {
 
 			ExtranetBranchDC.GetFromQueryString();
 			ExtranetBranchDC.Root = Constants.Paths.Branches;
@@ -149,16 +122,14 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard.Pages {
 			//setup site drop downs
 			IEnumerable<ListItem> sites = 
 				from val in Sitecore.Configuration.Factory.GetSiteInfoList()
-				where !sysSites.Contains(val.Name)
+				where !SitecoreUtility.SystemSites.Contains(val.Name)
 				orderby val.Name
 				select new ListItem() { ID = Control.GetUniqueID("I"), Header = val.Name, Value = val.Name, Selected = false };
 
-			foreach (ListItem s in sites) {
+			foreach (ListItem s in sites)
 				Sitecore.Context.ClientPage.AddControl(SiteItem, s);
-			}
 
-			Sitecore.Data.Database db = Sitecore.Configuration.Factory.GetDatabase("master");
-			IEnumerable<Language> langs = from val in db.Languages orderby val.Name select val;
+			IEnumerable<Language> langs = from val in MasterDB.Languages orderby val.Name select val;
 
 			foreach (Language l in langs) {
 				ListItem li1 = new ListItem() { ID = Control.GetUniqueID("I"), Header = l.CultureInfo.DisplayName, Value = l.Name, Selected = (l.Name == Sitecore.Context.Language.Name) };
@@ -166,6 +137,6 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard.Pages {
 			}
 		}
 
-		#endregion Page Load
+		#endregion Initialize
 	}
 }

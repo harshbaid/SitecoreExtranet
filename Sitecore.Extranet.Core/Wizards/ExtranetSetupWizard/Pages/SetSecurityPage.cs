@@ -21,15 +21,6 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard.Pages {
 			
 		#region Properties
 
-		private Database _db;
-		public Database db {
-			get {
-				if(_db == null)
-					_db = Sitecore.Configuration.Factory.GetDatabase("master");
-				return _db;
-			}
-		}
-
 		public BasePage PreviousPage { get; set; }
 
 		public override bool IsValid {
@@ -46,15 +37,34 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard.Pages {
 			}
 		}
 
-		public override IEnumerable<string> DataSummary {
-			get {
-				yield return SummaryStr(Constants.Keys.Page, db.GetItem(PageTree.Value).Paths.ContentPath);
-				yield return SummaryStr(Constants.Keys.SecProvider, SecurityProvider.SelectedItem.Name);
+		private bool ValidatePage() {
+
+			bool valid = true;
+			StringBuilder sb = new StringBuilder();
+
+			string cID = PageTree.Value;
+			if (!string.IsNullOrEmpty(cID) && Sitecore.Data.ID.IsID(cID)) { // Content Branch
+				Item ci = MasterDB.GetItem(cID);
+				if (ci == null) {
+					valid = false;
+					sb.Append("The item you selected is null.").Append("<br/>");
+				}
+			} else {
+				valid = false;
+				sb.Append("The item selected is producing an empty string or bad ID.").Append("<br/>");
 			}
+
+			if (!valid)
+				PageErrorMessage.Text = sb.ToString();
+
+			return valid;
 		}
 
-		protected string SummaryStr(string name, string value) {
-			return string.Format("{0}: <span class='value'>{1}</span>", name, value);
+		public override IEnumerable<string> DataSummary {
+			get {
+				yield return SummaryStr(Constants.Keys.Page, MasterDB.GetItem(PageTree.Value).Paths.ContentPath);
+				yield return SummaryStr(Constants.Keys.SecProvider, SecurityProvider.SelectedItem.Name);
+			}
 		}
 
 		public override IEnumerable<KeyValuePair<string, object>> DataDictionary {
@@ -66,18 +76,9 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard.Pages {
 
 		#endregion Properties
 
-		#region Page Load
+		#region Initialize
 
-		protected override void OnLoad(EventArgs e) {
-
-			// similar to is not PostBack.
-			if (!Sitecore.Context.ClientPage.IsEvent) {
-				InitializeControl();
-			}
-			base.OnLoad(e);
-		}
-
-		private void InitializeControl() {
+		protected void InitializeControl() {
 
 			SetDataContext();
 
@@ -103,29 +104,6 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard.Pages {
 			PageDC.Folder = sc.StartPath;
 		}
 
-		#endregion Page Load
-		
-		private bool ValidatePage() {
-
-			bool valid = true;
-			StringBuilder sb = new StringBuilder();
-
-			string cID = PageTree.Value;
-			if (!string.IsNullOrEmpty(cID) && Sitecore.Data.ID.IsID(cID)) { // Content Branch
-				Item ci = db.GetItem(cID);
-				if (ci == null) {
-					valid = false;
-					sb.Append("The item you selected is null.").Append("<br/>");
-				}
-			} else {
-				valid = false;
-				sb.Append("The item selected is producing an empty string or bad ID.").Append("<br/>");
-			}
-
-			if (!valid)
-				PageErrorMessage.Text = sb.ToString();
-
-			return valid;
-		}
+		#endregion Initialize
 	}
 }

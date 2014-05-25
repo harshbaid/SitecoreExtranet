@@ -55,7 +55,7 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard {
 			Item LoginPage = ConfigureLoginPage(extranetFolder, PageItem, siteName);
 
 			//update site login settings and attributes
-			UpdateSite(SiteItem, LoginPage);
+			SetupSiteAttributes(SiteItem, LoginPage);
 		}
 
 		#endregion Start Build
@@ -135,7 +135,7 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard {
 			return loginPage;
 		}
 
-		protected void UpdateSite(SiteInfo siteInfo, Item loginPage) {
+		protected void SetupSiteAttributes(SiteInfo siteInfo, Item loginPage) {
 
 			string siteName = siteInfo.Name;
 			string loginUrl = string.Format("{0}.aspx", loginPage.Paths.ContentPath.Replace(string.Format("/{0}/Home", siteName), ""));
