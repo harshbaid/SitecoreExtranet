@@ -16,7 +16,6 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard.Pages {
 		protected Literal PageErrorMessage;
 		protected DataContext PageDC;
 		protected TreePicker PageTree;
-		protected Combobox SecurityProvider;
 		#endregion Page;
 			
 		#region Properties
@@ -63,14 +62,12 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard.Pages {
 		public override IEnumerable<string> DataSummary {
 			get {
 				yield return SummaryStr(Constants.Keys.Page, MasterDB.GetItem(PageTree.Value).Paths.ContentPath);
-				yield return SummaryStr(Constants.Keys.SecProvider, SecurityProvider.SelectedItem.Name);
 			}
 		}
 
 		public override IEnumerable<KeyValuePair<string, object>> DataDictionary {
 			get {
 				yield return new KeyValuePair<string, object>(Constants.Keys.Page, PageTree.Value);
-				yield return new KeyValuePair<string, object>(Constants.Keys.SecProvider, SecurityProvider.SelectedItem.Value);
 			}
 		}
 
@@ -81,11 +78,6 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard.Pages {
 		protected override void InitializeControl() {
 
 			SetDataContext();
-
-			foreach (MembershipProvider mp in Membership.Providers) {
-				ListItem li = new ListItem() { ID = Control.GetUniqueID("I"), Header = mp.Name, Value = mp.Name, Selected = false };
-				Sitecore.Context.ClientPage.AddControl(SecurityProvider, li);
-			}
 		}
 
 		public void SetDataContext() {

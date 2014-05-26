@@ -139,6 +139,7 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard {
 
 			string siteName = siteInfo.Name;
 			string loginUrl = string.Format("{0}.aspx", loginPage.Paths.ContentPath.Replace(string.Format("/{0}/Home", siteName), ""));
+			string secProvider = "sitecore";
 
 			//if you've got the multisite manager installed then you'll handle this differently
 			Item sFolder = MasterDB.GetItem(Constants.Paths.Sites);
@@ -160,7 +161,7 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard {
 					Item roleName = siteItem.Add("ExtranetRole", sa);
 					SetValue(roleName, string.Format("{0} Extranet", siteName));
 					Item providerName = siteItem.Add("ExtranetProvider", sa);
-					SetValue(providerName, InputData.Get<string>(Constants.Keys.SecProvider));
+					SetValue(providerName, secProvider);
 				}
 
 				PublishContent(siteItem, true);
@@ -173,7 +174,7 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard {
 				fc.AppendFormat("			<patch:attribute name=\"loginPage\">{0}</patch:attribute>", loginUrl).AppendLine();
 				fc.AppendFormat("			<patch:attribute name=\"ExtranetUserPrefix\">{0}_</patch:attribute>", siteName).AppendLine();
 				fc.AppendFormat("			<patch:attribute name=\"ExtranetRole\">{0} Extranet</patch:attribute>", siteName).AppendLine();
-				fc.AppendFormat("			<patch:attribute name=\"ExtranetProvider\">{0}</patch:attribute>", InputData.Get<string>(Constants.Keys.SecProvider)).AppendLine();
+				fc.AppendFormat("			<patch:attribute name=\"ExtranetProvider\">{0}</patch:attribute>", secProvider).AppendLine();
 				fc.AppendLine("			</site>");
 				fc.AppendLine("		</sites>");
 				fc.AppendLine("	</sitecore>");

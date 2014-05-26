@@ -15,11 +15,6 @@
 						<span class="asterisk">*</span>Choose a page to add the login page to:
 					</Label>
 					<TreePicker ID="PageTree" DataContext="PageDC" ToolTip="Selects the page that will have the extranet login page added as a child."/>
-
-					<Label For="SecurityProvider">
-						<span class="asterisk">*</span>Choose a Security Provider:
-					</Label>
-					<Combobox ID="SecurityProvider" ToolTip="Selects the security switching provider that is used to login a user." />
 				</GridPanel>
 			</Groupbox>
 
