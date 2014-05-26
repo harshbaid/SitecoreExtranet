@@ -35,6 +35,7 @@ namespace Sitecore.Extranet.UI
 		protected override PlaceHolder FormPH { get { return phForm; } }
 		protected override PlaceHolder MessagePH { get { return phMessage; } }
 		protected override Literal MessageText { get { return ltlMessage; } }
+		protected override Button SubmitButton { get { return btnSubmit; } }
 
 		#endregion
 

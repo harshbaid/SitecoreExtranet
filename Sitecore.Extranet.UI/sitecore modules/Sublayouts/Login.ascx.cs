@@ -31,6 +31,7 @@ namespace Sitecore.Extranet.UI
 		protected override Literal MessageText { get { return ltlMessage; } }
 		protected override TextBox Username { get { return txtUser; } }
 		protected override TextBox Password { get { return txtPass; } }
+		protected override Button SubmitButton { get { return btnSubmit;  } }
 
 		#endregion
 

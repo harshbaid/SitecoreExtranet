@@ -15,9 +15,12 @@ namespace Sitecore.Extranet.Core.Sublayouts.Extranet {
 		protected abstract Panel EditEmailPL { get; }
 		protected abstract Literal EmailMessageText { get; }
 		protected abstract HyperLink BackLink { get; }
+		protected abstract Button SubmitButton { get; }
 
 		protected override void Page_Load(object sender, EventArgs e) {
 			base.Page_Load(sender, e);
+
+			SubmitButton.Text = FormTextUtility.Provider.GetTextByKey("/EditAccount/ChangeEmail");
 
 			//set the current email to the form
 			OldEmail.Text = Sitecore.Context.User.Profile.Email;

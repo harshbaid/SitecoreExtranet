@@ -23,10 +23,13 @@ namespace Sitecore.Extranet.Core.Sublayouts.Extranet {
 		protected abstract PlaceHolder FormPH { get; }
 		protected abstract PlaceHolder MessagePH { get; }
 		protected abstract Literal MessageText { get; }
+		protected abstract Button SubmitButton { get; }
 
 		protected string LoginURL = Sitecore.Context.Site.LoginPage;
 
 		protected virtual void Page_Load(object sender, EventArgs e) {
+
+			SubmitButton.Text = FormTextUtility.Provider.GetTextByKey("/Login/Register");
 
 			//handle case where the id exists from a registration link
 			if (Request.QueryString.HasKey("code")) {

@@ -15,6 +15,7 @@ namespace Sitecore.Extranet.UI {
 		protected override Panel EditPassPL { get { return pnlEditPass; } }
 		protected override Literal PasswordMessageText { get { return ltlMessagePass; } }
 		protected override HyperLink BackLink { get { return lnkBack; } }
+		protected override Button SubmitButton { get { return btnSubmit; } }
 
 		protected override void Page_Load(object sender, EventArgs e) {
 			base.Page_Load(sender, e);

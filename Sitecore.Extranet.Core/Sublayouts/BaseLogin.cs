@@ -14,6 +14,7 @@ namespace Sitecore.Extranet.Core.Sublayouts.Extranet {
 		protected abstract Literal MessageText { get; }
 		protected abstract TextBox Username { get; }
 		protected abstract TextBox Password { get; }
+		protected abstract Button SubmitButton { get; }
 
 		private string _returnURL;
 		protected string returnURL {
@@ -46,7 +47,9 @@ namespace Sitecore.Extranet.Core.Sublayouts.Extranet {
 		}
 
 		protected virtual void Page_Load(object sender, EventArgs e) {
-			
+
+			SubmitButton.Text = FormTextUtility.Provider.GetTextByKey("/Login/Login");
+
 			//if you're logged in and you've got permissions to this site then redirect to home
 			if (ExtranetSecurity.IsLoggedIn()) {
 				if (!string.IsNullOrEmpty(returnURL)) {
@@ -102,7 +105,7 @@ namespace Sitecore.Extranet.Core.Sublayouts.Extranet {
 					try {
 						Sitecore.Security.Domains.Domain domain = Sitecore.Context.Domain;
 						string domainUser = domain.Name + @"\" + ExtranetSecurity.ExtranetUserPrefix() + username;
-						if (Membership.Providers[ExtranetSecurity.ExtranetProvider()].ValidateUser(domainUser, password)) {
+						if (Sitecore.Security.Authentication.AuthenticationManager.Login(domainUser, password, false)) {
 							//if you pass the login attempt but you're not logged in, that means there's no security attached to your user.
 							if (ExtranetSecurity.IsLoggedIn()) {
 								ExtranetSession.Reset();

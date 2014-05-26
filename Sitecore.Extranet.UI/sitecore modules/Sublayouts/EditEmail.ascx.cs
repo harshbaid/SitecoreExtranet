@@ -15,6 +15,7 @@ namespace Sitecore.Extranet.UI {
 		protected override Panel EditEmailPL { get { return pnlEditEmail; } }
 		protected override Literal EmailMessageText { get { return ltlMessageEmail; } }
 		protected override HyperLink BackLink { get { return lnkBack; } }
+		protected override Button SubmitButton { get { return btnSubmit; } }
 
 		protected void Page_Load(object sender, EventArgs e) {
 			base.Page_Load(sender, e);

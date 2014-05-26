@@ -14,9 +14,12 @@ namespace Sitecore.Extranet.Core.Sublayouts.Extranet {
 		protected abstract Panel EditPassPL { get; }
 		protected abstract Literal PasswordMessageText { get; }
 		protected abstract HyperLink BackLink { get; }
+		protected abstract Button SubmitButton { get; }
 
 		protected override void Page_Load(object sender, EventArgs e) {
 			base.Page_Load(sender, e);
+
+			SubmitButton.Text = FormTextUtility.Provider.GetTextByKey("/EditAccount/ChangePassword");
 
 			BackLink.NavigateUrl = SitecoreUtility.GetItemURL(PreferredDataSource.Parent);
 		}

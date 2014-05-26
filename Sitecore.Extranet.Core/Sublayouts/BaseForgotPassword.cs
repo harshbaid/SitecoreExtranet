@@ -14,12 +14,16 @@ namespace Sitecore.Extranet.Core.Sublayouts.Extranet {
 		protected abstract HyperLink RegisterLink { get; }
 		protected abstract TextBox Username { get; }
 		protected abstract Literal MessageText { get; }
+		protected abstract Button SubmitButton { get; }
 
 		protected string returnURL;
 		public string LoginURL = Sitecore.Context.Site.LoginPage;
 		public string RegisterURL = ExtranetSecurity.RegisterURL;
 
 		protected virtual void Page_Load(object sender, EventArgs e) {
+
+			SubmitButton.Text = FormTextUtility.Provider.GetTextByKey("/ForgotPassword/ResetPassword");
+
 			//set the return url
 			if (Request.QueryString.HasKey("returnUrl") && !Request.QueryString.HasKey("returnUrl").Equals("")) {
 				returnURL = Request.QueryString["returnUrl"];

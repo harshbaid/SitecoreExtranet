@@ -7,28 +7,28 @@
 <asp:Panel ID="pnlLogin" CssClass="exLogin" runat="server">
     <sc:FieldRenderer runat="server" ID="contentField" FieldName="Content"  />
 	<div class="exForm">
-        <h2><SCExtranet:FormText runat="server" TextKey="/Login/Login" /></h2>
+        <h2><%=FormTextUtility.Provider.GetTextByKey("/Login/Login") %></h2>
 	    <p></p>
 	    <div class="required">
             <asp:Literal ID="ltlMessage" runat="server" />
         </div>
         <div>
-		    <asp:Label AssociatedControlID="txtUser" Text="<%=FormTextUtility.Provider.GetTextByKey("/Login/Username") %>" runat="server"></asp:Label>
+		    <label><%=FormTextUtility.Provider.GetTextByKey("/Login/Username") %></label>
 			<asp:TextBox ID="txtUser" runat="server" />
 			<asp:RequiredFieldValidator ControlToValidate="txtUser" runat="server" ValidationGroup="ExtranetLogin"></asp:RequiredFieldValidator>
             
-            <asp:Label AssociatedControlID="txtPass" Text="<%=FormTextUtility.Provider.GetTextByKey("/Login/Password") %>" runat="server"></asp:Label>
+            <label><%=FormTextUtility.Provider.GetTextByKey("/Login/Password") %></label>
 			<asp:TextBox ID="txtPass" TextMode="Password" runat="server" />
 		    <asp:RequiredFieldValidator ControlToValidate="txtUser" runat="server" ValidationGroup="ExtranetLogin"></asp:RequiredFieldValidator>
             
-            <asp:Button Text="<%=FormTextUtility.Provider.GetTextByKey("/Login/Login") %>" ValidationGroup="ExtranetLogin" OnClick="ProcessLogin" runat="server"/>            
+            <asp:Button ID="btnSubmit" ValidationGroup="ExtranetLogin" OnClick="ProcessLogin" runat="server"/>            
         </div>
         <div>
 		    <p></p>
             <a href="<%= ForgotPasswordURL%>">
-			    <SCExtranet:FormText runat="server" TextKey="/Login/ForgotPassword" />
+				<%=FormTextUtility.Provider.GetTextByKey("/Login/ForgotPassword") %>
             </a> | <asp:HyperLink ID="lnkRegister" runat="server">
-			    <SCExtranet:FormText runat="server" TextKey="/Login/Register" />
+				<%=FormTextUtility.Provider.GetTextByKey("/Login/Register") %>
             </asp:HyperLink>
         </div>
 	 </div>

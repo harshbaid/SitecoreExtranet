@@ -30,6 +30,7 @@ namespace Sitecore.Extranet.UI
 		protected override HyperLink RegisterLink { get { return lnkRegister; } }
 		protected override TextBox Username { get { return txtUser; } }
 		protected override Literal MessageText { get { return ltlMessage; } }
+		protected override Button SubmitButton { get { return btnSubmit; } }
 
 		#endregion
 
