@@ -31,7 +31,7 @@ namespace Sitecore.Extranet.Core.Utility {
 		}
 
 		public static string GetItemURL(Item i) {
-			return LinkManager.GetDynamicUrl(i);
+			return LinkManager.GetItemUrl(i);
 		}
 
 		#region Publishing
