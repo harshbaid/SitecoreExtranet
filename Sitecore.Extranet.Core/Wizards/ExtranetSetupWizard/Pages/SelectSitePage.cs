@@ -22,7 +22,6 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard.Pages {
 		protected Literal BranchErrorMessage;
 		protected TreePicker ExtranetBranch;
 		protected Listbox LanguageList; 
-		protected Checkbox PublishContent;
 		#endregion Controls
 
 		#region Properties
@@ -91,8 +90,7 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard.Pages {
 											select string.Format("<span class='value'>{0}</span>", li.Header);
 				//get the rest
 				IEnumerable<string> others = new List<string> { 
-					SummaryStr(Constants.Keys.ExtranetBranch, MasterDB.GetItem(ExtranetBranch.Value).Name),							 
-					SummaryStr(Constants.Keys.PublishContent, PublishContent.Checked.ToString()),
+					SummaryStr(Constants.Keys.ExtranetBranch, MasterDB.GetItem(ExtranetBranch.Value).Name),	
 					SummaryStr(Constants.Keys.Site, SiteItem.Value)
 				};
 				
@@ -105,7 +103,6 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard.Pages {
 				yield return new KeyValuePair<string, object>(Constants.Keys.Site, SiteItem.Value);
 				yield return new KeyValuePair<string, object>(Constants.Keys.ExtranetBranch, ExtranetBranch.Value);
 				yield return new KeyValuePair<string, object>(Constants.Keys.Languages, LanguageList.Selected.Where(a => a.Selected));
-				yield return new KeyValuePair<string, object>(Constants.Keys.PublishContent, PublishContent.Checked);
 			}
 		}
 

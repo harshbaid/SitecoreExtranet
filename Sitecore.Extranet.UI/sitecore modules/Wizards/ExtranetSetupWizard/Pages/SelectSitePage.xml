@@ -40,13 +40,6 @@
 				</GridPanel>
 			</Groupbox>
 
-			<Groupbox Header="Publish Options">
-				<GridPanel Columns="2">
-					<Label For="PublishContent">Should the extranet pages be published: </Label>
-					<Checkbox ID="PublishContent" Class="checkbox" ToolTip="Will determine if the extranet pages created will be automatically published."/>
-				</GridPanel>
-			</Groupbox>
-
 		</GridPanel>
 	</SelectSitePage>
 </control>

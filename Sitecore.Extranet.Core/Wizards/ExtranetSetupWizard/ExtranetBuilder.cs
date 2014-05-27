@@ -81,9 +81,7 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard {
 
 						Item HomeItem = MasterDB.GetItem(string.Format("{0}{1}", siteItem.RootPath, siteItem.StartItem));
 						extranetFolder = HomeItem.Add("extranet", extranetBranch);
-
-						PublishContent(extranetFolder, true);
-
+						
 						CleanupList.Add(extranetFolder); // Register website for cleanup if creation fails. 
 					} else {
 						// All content items including website item
@@ -98,10 +96,7 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard {
 							//create a version of the current language for all the content under website
 							Item langVersion = MasterDB.GetItem(newItem.ID, targetLang);
 							langVersion = langVersion.Versions.AddVersion();
-
-							//publish content item
-							PublishContent(langVersion, false);
-
+							
 							ItemCur++;
 						}
 					}
@@ -127,8 +122,6 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard {
 			string s = loginPage[FieldIDs.Security];
 			if (!string.IsNullOrEmpty(s))
 				ReplaceSecurity(loginPage, "BranchTemplate", sitename);
-			
-			PublishContent(loginPage, false);
 
 			CleanupList.Add(loginPage);
 			
@@ -163,8 +156,6 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard {
 					Item providerName = siteItem.Add("ExtranetProvider", sa);
 					SetValue(providerName, secProvider);
 				}
-
-				PublishContent(siteItem, true);
 			} else {
 				StringBuilder fc = new StringBuilder();
 				fc.AppendLine("<configuration xmlns:patch=\"http://www.sitecore.net/xmlconfig/\">");
@@ -205,14 +196,6 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard {
 				i["Value"] = value;
 			}
 			CleanupList.Add(i);
-		}
-
-		protected void PublishContent(Item i, bool publishChildren) {
-			//get the value from the settings page of the InputData
-			bool publishContent = InputData.Get<bool>(Constants.Keys.PublishContent);
-			if (publishContent) {
-				SitecoreUtility.PublishContent(i, publishChildren);
-			}
 		}
 
 		#endregion Helper Methods
