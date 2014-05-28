@@ -153,8 +153,6 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard {
 					SetValue(uPrefix, string.Format("{0}_", siteName));
 					Item roleName = siteItem.Add("ExtranetRole", sa);
 					SetValue(roleName, string.Format("{0} Extranet", siteName));
-					Item providerName = siteItem.Add("ExtranetProvider", sa);
-					SetValue(providerName, secProvider);
 				}
 			} else {
 				StringBuilder fc = new StringBuilder();
@@ -165,7 +163,6 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard {
 				fc.AppendFormat("			<patch:attribute name=\"loginPage\">{0}</patch:attribute>", loginUrl).AppendLine();
 				fc.AppendFormat("			<patch:attribute name=\"ExtranetUserPrefix\">{0}_</patch:attribute>", siteName).AppendLine();
 				fc.AppendFormat("			<patch:attribute name=\"ExtranetRole\">{0} Extranet</patch:attribute>", siteName).AppendLine();
-				fc.AppendFormat("			<patch:attribute name=\"ExtranetProvider\">{0}</patch:attribute>", secProvider).AppendLine();
 				fc.AppendLine("			</site>");
 				fc.AppendLine("		</sites>");
 				fc.AppendLine("	</sitecore>");

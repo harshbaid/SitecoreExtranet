@@ -31,10 +31,6 @@
 							<%# ((SiteInfo)Container.DataItem).Properties["ExtranetRole"] %>
 						</div>
 						<div>
-							<span>Extranet Provider: </span>
-							<%# ((SiteInfo)Container.DataItem).Properties["ExtranetProvider"] %>
-						</div>
-						<div>
 							<span>Login URL: </span>
 							<%# ((SiteInfo)Container.DataItem).Properties["loginPage"] %>
 						</div>
