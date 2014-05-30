@@ -13,33 +13,53 @@ namespace Sitecore.Extranet.Core.Utility
 		#region Extranet Info
 
 		public static bool HasExtranetUserPrefix() {
-			return (!string.IsNullOrEmpty(ExtranetUserPrefix()));
+			return PropExists(Constants.ExtranetAttributes.UserPrefix);
 		}
 
 		public static string ExtranetUserPrefix() {
-			NameValueCollection n = Sitecore.Context.Site.Properties;
-			return (n.HasKey("ExtranetUserPrefix")) ? n["ExtranetUserPrefix"] : "";
+			return GetProp(Constants.ExtranetAttributes.UserPrefix);
 		}
 
 		public static bool HasExtranetRole() {
-			return (!string.IsNullOrEmpty(ExtranetRole()));
+			return PropExists(Constants.ExtranetAttributes.Role);
 		}
 
 		public static string ExtranetRole() {
-			NameValueCollection n = Sitecore.Context.Site.Properties;
-			return (n.HasKey("ExtranetRole")) ? n["ExtranetRole"] : "";
+			return GetProp(Constants.ExtranetAttributes.Role);
 		}
 
 		public static bool HasExtranetProvider() {
-			return (!string.IsNullOrEmpty(ExtranetProvider()));
+			return PropExists(Constants.ExtranetAttributes.Provider);
 		}
 
 		public static string ExtranetProvider() {
-			NameValueCollection n = Sitecore.Context.Site.Properties;
-			return (n.HasKey("ExtranetProvider")) ? n["ExtranetProvider"] : "";
+			return GetProp(Constants.ExtranetAttributes.Provider);
 		}
 
-		public static string QSMessKey = "message";
+		public static bool HasFromEmailAddress() {
+			return PropExists(Constants.ExtranetAttributes.FromEmail);
+		}
+
+		public static string FromEmailAddress() {
+			return GetProp(Constants.ExtranetAttributes.FromEmail);
+		}
+
+		public static bool HasLoginCount() {
+			return PropExists(Constants.ExtranetAttributes.LoginCount);
+		}
+
+		public static int LoginCount() {
+			return int.Parse(GetProp(Constants.ExtranetAttributes.LoginCount));
+		}
+
+		private static bool PropExists(string propName) {
+			return (!string.IsNullOrEmpty(GetProp(propName)));
+		}
+
+		private static string GetProp(string propName) {
+			NameValueCollection n = Sitecore.Context.Site.Properties;
+			return (n.HasKey(propName)) ? n[propName] : "";
+		}
 
 		#endregion Extranet Info
 

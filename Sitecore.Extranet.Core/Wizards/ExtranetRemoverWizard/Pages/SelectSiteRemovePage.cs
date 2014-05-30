@@ -22,12 +22,6 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetRemoverWizard.Pages {
 
 		#region Properties
 
-		protected List<string> Attributes {
-			get {
-				return new List<string>() { "ExtranetUserPrefix", "ExtranetRole", "ExtranetProvider" };
-			}
-		}
-
 		public override IEnumerable<string> DataSummary {
 			get {
 				SiteInfo si= Factory.GetSiteInfo(SiteItem.Value);
@@ -52,7 +46,7 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetRemoverWizard.Pages {
 				}
 
 				//find the attributes
-				IEnumerable<KeyValuePair<string,string>> atts = si.Properties.ToDictionary().Where(a => Attributes.Contains(a.Key));
+				IEnumerable<KeyValuePair<string,string>> atts = si.Properties.ToDictionary().Where(a => Sitecore.Extranet.Core.Constants.ExtranetAttributes.Keys.Contains(a.Key));
 				if (atts != null && atts.Any()) {
 					foreach (KeyValuePair<string, string> a in atts)
 						yield return SummaryStr("Attribute", string.Format("{0} - {1}", a.Key, a.Value));

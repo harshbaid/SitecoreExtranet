@@ -57,7 +57,7 @@ namespace Sitecore.Extranet.Core.Sublayouts.Extranet {
 						string newPass = user.ResetPassword();
 
 						MailMessage m = new MailMessage();
-						m.From = new MailAddress(SettingsUtility.FromEmailAddress);
+						m.From = new MailAddress(ExtranetSecurity.FromEmailAddress());
 						m.To.Add(new MailAddress(u.Profile.Email));
 						m.Subject = string.Format("{0} {1}",
 							FormTextUtility.Provider.GetTextByKey("/ForgotPassword/EmailResetPasswordSubject"),

@@ -6,7 +6,26 @@ using System.Threading.Tasks;
 
 namespace Sitecore.Extranet.Core {
 	public static class Constants {
-		
+
+		public class ExtranetAttributes {
+			public static readonly string UserPrefix = "ExtranetUserPrefix";
+			public static readonly string Role = "ExtranetRole";
+			public static readonly string Provider = "ExtranetProvider";
+			public static readonly string FromEmail = "EmailFromAddress";
+			public static readonly string LoginCount = "LoginCount";
+			public static readonly string LoginPage = "loginPage";
+			
+			public static List<string> Keys {
+				get {
+					return new List<string> { UserPrefix, Role, FromEmail, LoginCount };
+				}
+			}
+		}
+
+		public class ExtranetParams {
+			public static string QSMessKey = "message";
+		}
+
 		public class ExtranetPageIDs {
 			public static readonly string EditAccountPage = "{65BB2602-A3D0-4E5F-870B-BAB5D2ED9698}";
 			public static readonly string EditEmailPage = "{738AE870-3132-4ABE-90DF-F055158E52B7}";

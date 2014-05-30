@@ -87,10 +87,10 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetRemoverWizard {
 				Item siteItem = sFolder.Axes.GetChild(siteInfo.Name);
 				//set login url on the site node
 				using (new EditContext(siteItem)) {
-					siteItem["loginPage"] = string.Empty;
+					siteItem[Sitecore.Extranet.Core.Constants.ExtranetAttributes.LoginPage] = string.Empty;
 				}
-				
-				IEnumerable<Item> atts = siteItem.Axes.GetDescendants().Where(a => a.Template.IsID(Constants.TemplateIDs.SiteAttribute));
+
+				IEnumerable<Item> atts = siteItem.Axes.GetDescendants().Where(a => a.Template.IsID(Constants.TemplateIDs.SiteAttribute) && Sitecore.Extranet.Core.Constants.ExtranetAttributes.Keys.Contains(a.Key));
 				if (atts != null && atts.Any()) {
 					foreach (Item a in atts)
 						a.Recycle();

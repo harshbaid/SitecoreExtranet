@@ -99,8 +99,8 @@ namespace Sitecore.Extranet.Core.Sublayouts.Extranet {
 			}
 			//increase the counter
 			ExtranetSession.IncreaseCounter();
-			//only try to login 5 times
-			if (ExtranetSession.Count() < 30) {
+			//only try to login a limited amount of times
+			if (ExtranetSession.Count() < ExtranetSecurity.LoginCount()) {
 				if (ExtranetSecurity.HasExtranetUserPrefix()) {
 					try {
 						Sitecore.Security.Domains.Domain domain = Sitecore.Context.Domain;

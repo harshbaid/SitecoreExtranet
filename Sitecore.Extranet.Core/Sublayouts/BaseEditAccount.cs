@@ -26,7 +26,7 @@ namespace Sitecore.Extranet.Core.Sublayouts.Extranet {
 			UsernameText.Text = ExtranetSecurity.GetCurrentUserName();
 			EmailText.Text = Sitecore.Context.User.Profile.Email;
 
-			string message = WebUtil.GetQueryString(ExtranetSecurity.QSMessKey, string.Empty);
+			string message = WebUtil.GetQueryString(Constants.ExtranetParams.QSMessKey, string.Empty);
 			if (!string.IsNullOrEmpty(message))
 				MessageText.Text = message;
 

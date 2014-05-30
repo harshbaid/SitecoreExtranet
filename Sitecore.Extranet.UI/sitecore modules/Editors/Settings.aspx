@@ -3,6 +3,7 @@
 	Inherits="Sitecore.Extranet.UI.Settings" %>
 
 <%@ Import Namespace="Sitecore.Web" %>
+<%@ Import Namespace="Sitecore.Extranet.Core" %>
 
 <!DOCTYPE html>
 
@@ -24,15 +25,23 @@
 						<h2><%# ((SiteInfo)Container.DataItem).Name %></h2>
 						<div>
 							<span>Extranet User Prefix: </span>
-							<%# ((SiteInfo)Container.DataItem).Properties["ExtranetUserPrefix"] %>
+							<%# ((SiteInfo)Container.DataItem).Properties[Constants.ExtranetAttributes.UserPrefix] %>
 						</div>
 						<div>
 							<span>Extranet Role: </span>
-							<%# ((SiteInfo)Container.DataItem).Properties["ExtranetRole"] %>
+							<%# ((SiteInfo)Container.DataItem).Properties[Constants.ExtranetAttributes.Role] %>
 						</div>
 						<div>
 							<span>Login URL: </span>
-							<%# ((SiteInfo)Container.DataItem).Properties["loginPage"] %>
+							<%# ((SiteInfo)Container.DataItem).Properties[Constants.ExtranetAttributes.LoginPage] %>
+						</div>
+						<div>
+							<span>From Email Address: </span>
+							<%# ((SiteInfo)Container.DataItem).Properties[Constants.ExtranetAttributes.FromEmail] %>
+						</div>
+						<div>
+							<span>Login Count: </span>
+							<%# ((SiteInfo)Container.DataItem).Properties[Constants.ExtranetAttributes.LoginCount] %>
 						</div>
 						<div>
 							<span>User Count: </span>

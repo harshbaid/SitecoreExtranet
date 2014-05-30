@@ -39,7 +39,7 @@ namespace Sitecore.Extranet.Core.Sublayouts.Extranet {
 						NewEmailConfirm.Text = "";
 						EditEmailPL.Visible = false;
 					}
-					Response.Redirect(string.Format("{0}?{1}={2}", ExtranetSecurity.EditAccountURL, ExtranetSecurity.QSMessKey, message), true);
+					Response.Redirect(string.Format("{0}?{1}={2}", ExtranetSecurity.EditAccountURL, Constants.ExtranetParams.QSMessKey, message), true);
 				} else {
 					EmailMessageText.Text = FormTextUtility.Provider.GetTextByKey("/EditAccount/EmailDoesntMatch");
 				}

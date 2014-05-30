@@ -133,6 +133,8 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard {
 			string siteName = siteInfo.Name;
 			string loginUrl = string.Format("{0}.aspx", loginPage.Paths.ContentPath.Replace(string.Format("/{0}/Home", siteName), ""));
 			string secProvider = "sitecore";
+			string fromEmail = InputData.Get<string>(Sitecore.Extranet.Core.Constants.ExtranetAttributes.FromEmail);
+			string loginCount = InputData.Get<string>(Sitecore.Extranet.Core.Constants.ExtranetAttributes.LoginCount);
 
 			//if you've got the multisite manager installed then you'll handle this differently
 			Item sFolder = MasterDB.GetItem(Constants.Paths.Sites);
@@ -144,15 +146,19 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard {
 				Item siteItem = siteRes.First();
 				
 				using (new EditContext(siteItem)) //set login url on the site node
-					siteItem["loginPage"] = loginUrl;
+					siteItem[Sitecore.Extranet.Core.Constants.ExtranetAttributes.LoginPage] = loginUrl;
 
 				//set extranet user prefix attributes on site node: ExtranetUserPrefix and ExtranetRole 
 				TemplateItem sa = GetItem(Constants.TemplateIDs.SiteAttribute);
 				if (sa != null) {
-					Item uPrefix = siteItem.Add("ExtranetUserPrefix", sa);
+					Item uPrefix = siteItem.Add(Sitecore.Extranet.Core.Constants.ExtranetAttributes.UserPrefix, sa);
 					SetValue(uPrefix, string.Format("{0}_", siteName));
-					Item roleName = siteItem.Add("ExtranetRole", sa);
+					Item roleName = siteItem.Add(Sitecore.Extranet.Core.Constants.ExtranetAttributes.Role, sa);
 					SetValue(roleName, string.Format("{0} Extranet", siteName));
+					Item fEmail = siteItem.Add(Sitecore.Extranet.Core.Constants.ExtranetAttributes.FromEmail, sa);
+					SetValue(fEmail, fromEmail);
+					Item lCount = siteItem.Add(Sitecore.Extranet.Core.Constants.ExtranetAttributes.LoginCount, sa);
+					SetValue(lCount, loginCount);
 				}
 			} else {
 				StringBuilder fc = new StringBuilder();
@@ -160,9 +166,11 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard {
 				fc.AppendLine("	<sitecore>");
 				fc.AppendLine("		<sites>");
 				fc.AppendFormat("		<site name=\"{0}\">", siteName).AppendLine();
-				fc.AppendFormat("			<patch:attribute name=\"loginPage\">{0}</patch:attribute>", loginUrl).AppendLine();
-				fc.AppendFormat("			<patch:attribute name=\"ExtranetUserPrefix\">{0}_</patch:attribute>", siteName).AppendLine();
-				fc.AppendFormat("			<patch:attribute name=\"ExtranetRole\">{0} Extranet</patch:attribute>", siteName).AppendLine();
+				fc.AppendFormat("			<patch:attribute name=\"{0}\">{1}</patch:attribute>", Sitecore.Extranet.Core.Constants.ExtranetAttributes.LoginPage, loginUrl).AppendLine();
+				fc.AppendFormat("			<patch:attribute name=\"{0}\">{1}_</patch:attribute>", Sitecore.Extranet.Core.Constants.ExtranetAttributes.UserPrefix, siteName).AppendLine();
+				fc.AppendFormat("			<patch:attribute name=\"{0}\">{1} Extranet</patch:attribute>", Sitecore.Extranet.Core.Constants.ExtranetAttributes.Role, siteName).AppendLine();
+				fc.AppendFormat("			<patch:attribute name=\"{0}\">{1}</patch:attribute>", Sitecore.Extranet.Core.Constants.ExtranetAttributes.FromEmail, fromEmail).AppendLine();
+				fc.AppendFormat("			<patch:attribute name=\"{0}\">{1}</patch:attribute>", Sitecore.Extranet.Core.Constants.ExtranetAttributes.LoginCount, loginCount).AppendLine();	
 				fc.AppendLine("			</site>");
 				fc.AppendLine("		</sites>");
 				fc.AppendLine("	</sitecore>");

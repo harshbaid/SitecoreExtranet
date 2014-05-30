@@ -101,7 +101,7 @@ namespace Sitecore.Extranet.Core.Sublayouts.Extranet {
 									body.AppendLine().AppendLine(FormTextUtility.Provider.GetTextByKey("/Register/EmailMessage") + ": http://" + req.Url.Host + path + req.QueryString.ToQueryString(qString) + ".");
 
 									MailMessage m = new MailMessage();
-									m.From = new MailAddress(SettingsUtility.FromEmailAddress);
+									m.From = new MailAddress(ExtranetSecurity.FromEmailAddress());
 									m.To.Add(new MailAddress(email));
 									m.Subject = FormTextUtility.Provider.GetTextByKey("/Register/EmailNewUserSubject");
 									m.Body = body.ToString();

@@ -15,6 +15,16 @@
 						<span class="asterisk">*</span>Choose a page to add the login page to:
 					</Label>
 					<TreePicker ID="PageTree" DataContext="PageDC" ToolTip="Selects the page that will have the extranet login page added as a child."/>
+					
+					<Label For="FromEmail">
+						<span class="asterisk">*</span>From Email: 
+					</Label>
+					<Edit ID="FromEmail" Value="" ToolTip="What email address should emails be sent from?"/>
+
+					<Label For="LoginCount">
+						<span class="asterisk">*</span>Login Count: 
+					</Label>
+					<Edit ID="LoginCount" Value="20" ToolTip="What is the max number of login attempts for a user?"/>
 				</GridPanel>
 			</Groupbox>
 

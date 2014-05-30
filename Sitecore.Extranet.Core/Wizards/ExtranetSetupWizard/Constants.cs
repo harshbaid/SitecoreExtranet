@@ -21,7 +21,7 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard {
 		}
 
 		public static class FilePatterns {
-			public static readonly string ExtranetSiteConfig = "/App_Config/Include/Sitecore.Extranet.sites.{0}.config";
+			public static readonly string ExtranetSiteConfig = "/App_Config/Include/Sitecore.Extranet.Sites.{0}.config";
 		}
 
 		public static class ItemIDs {

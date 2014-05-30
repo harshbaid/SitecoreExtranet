@@ -31,7 +31,7 @@ namespace Sitecore.Extranet.Core.Sublayouts.Extranet {
 					if (UpdatePassword(OldPassword.Text, NewPassword.Text, ref message)) {
 						EditPassPL.Visible = false;
 					}
-					Response.Redirect(string.Format("{0}?{1}={2}", ExtranetSecurity.EditAccountURL, ExtranetSecurity.QSMessKey, message), true);
+					Response.Redirect(string.Format("{0}?{1}={2}", ExtranetSecurity.EditAccountURL, Constants.ExtranetParams.QSMessKey, message), true);
 				} else {
 					PasswordMessageText.Text = FormTextUtility.Provider.GetTextByKey("/EditAccount/PasswordDoesntMatch");
 				}

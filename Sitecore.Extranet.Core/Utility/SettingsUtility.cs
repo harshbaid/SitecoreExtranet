@@ -13,11 +13,5 @@ namespace Sitecore.Extranet.Core.Utility {
 				return Sitecore.Context.Database.GetItem("/sitecore/System/Modules/Extranet/Settings");
 			}
 		}
-
-		public static string FromEmailAddress {
-			get {
-				return (Settings != null) ? Settings["Email From Address"] : string.Empty;
-			}
-		}
 	}
 }

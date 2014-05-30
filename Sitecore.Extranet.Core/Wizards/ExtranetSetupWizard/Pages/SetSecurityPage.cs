@@ -16,6 +16,8 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard.Pages {
 		protected Literal PageErrorMessage;
 		protected DataContext PageDC;
 		protected TreePicker PageTree;
+		protected Edit FromEmail;
+		protected Edit LoginCount;
 		#endregion Page;
 			
 		#region Properties
@@ -53,6 +55,17 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard.Pages {
 				sb.Append("The item selected is producing an empty string or bad ID.").Append("<br/>");
 			}
 
+			if (string.IsNullOrEmpty(FromEmail.Value)) {
+				valid = false;
+				sb.Append("You need to provide a 'From' email address.").Append("<br/>");
+			}
+
+			int count = -1;
+			if (string.IsNullOrEmpty(LoginCount.Value) || !int.TryParse(LoginCount.Value, out count)) {
+				valid = false;
+				sb.Append("You need to provide a number for the login count.").Append("<br/>");
+			}
+
 			if (!valid)
 				PageErrorMessage.Text = sb.ToString();
 
@@ -62,12 +75,16 @@ namespace Sitecore.Extranet.Core.Wizards.ExtranetSetupWizard.Pages {
 		public override IEnumerable<string> DataSummary {
 			get {
 				yield return SummaryStr(Constants.Keys.Page, MasterDB.GetItem(PageTree.Value).Paths.ContentPath);
+				yield return SummaryStr(Sitecore.Extranet.Core.Constants.ExtranetAttributes.FromEmail, FromEmail.Value);
+				yield return SummaryStr(Sitecore.Extranet.Core.Constants.ExtranetAttributes.LoginCount, LoginCount.Value);
 			}
 		}
 
 		public override IEnumerable<KeyValuePair<string, object>> DataDictionary {
 			get {
 				yield return new KeyValuePair<string, object>(Constants.Keys.Page, PageTree.Value);
+				yield return new KeyValuePair<string, object>(Sitecore.Extranet.Core.Constants.ExtranetAttributes.FromEmail, FromEmail.Value);
+				yield return new KeyValuePair<string, object>(Sitecore.Extranet.Core.Constants.ExtranetAttributes.LoginCount, LoginCount.Value);
 			}
 		}
 
