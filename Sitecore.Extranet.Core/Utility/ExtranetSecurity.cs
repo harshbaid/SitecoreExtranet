@@ -125,10 +125,10 @@ namespace Sitecore.Extranet.Core.Utility
 
 		#region Login
 
-		public static bool IsLoggedIn(){
-			//if you're logged in and you've got permissions to this site then redirect to home
-			return (Sitecore.Context.IsLoggedIn && Sitecore.Context.User.Roles.Where(a => a.Name.Contains(Sitecore.Context.Domain.Name)).Any());
-		}
+        public static bool IsLoggedIn() { //if you're logged in and you have the extranet role
+            string qualRole = string.Format(@"{0}\{1}", Sitecore.Context.Domain, ExtranetRole());
+            return (Sitecore.Context.IsLoggedIn && Sitecore.Context.User.Roles.Any(a => a.Name.Equals(qualRole)));
+        }
 
 		#endregion Login
 	}

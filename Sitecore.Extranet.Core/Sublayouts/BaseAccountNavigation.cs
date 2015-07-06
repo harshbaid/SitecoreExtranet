@@ -21,17 +21,18 @@ namespace Sitecore.Extranet.Core.Sublayouts.Extranet {
 		protected virtual void Page_Load(object sender, EventArgs e) {
 
 			//if you're logged in show the section
-			if (Sitecore.Context.IsLoggedIn && Sitecore.Context.User.Roles.Where(a => a.Name.Contains(Sitecore.Context.Domain.Name)).Any()) {
-				AccountNavPH.Visible = true;
-				string name = Sitecore.Context.User.Profile.FullName;
-				if(UsernameText != null)
-					UsernameText.Text = (name.Equals("")) ? "Extranet User" : name;
-			}
+            if (!ExtranetSecurity.IsLoggedIn())
+                return;
+
+			AccountNavPH.Visible = true;
+			string name = Sitecore.Context.User.Profile.FullName;
+			if(UsernameText != null)
+				UsernameText.Text = (name.Equals("")) ? "Extranet User" : name;
 		}
 
-		protected virtual void ProcessLogout(object sender, EventArgs args) {
-			Sitecore.Security.Authentication.AuthenticationManager.Logout();
-			Response.Redirect(Sitecore.Context.Site.LoginPage);
-		}
+        protected virtual void ProcessLogout(object sender, EventArgs args) {
+            Sitecore.Security.Authentication.AuthenticationManager.Logout();
+            Response.Redirect(Request.RawUrl);
+        }
 	}
 }

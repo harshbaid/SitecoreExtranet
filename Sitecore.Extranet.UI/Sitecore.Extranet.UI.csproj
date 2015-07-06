@@ -156,7 +156,7 @@
   <PropertyGroup>
     <PostBuildEvent>copy /Y "$(ProjectDir)\App_Config\Include\Sitecore.Extranet.config" "$(SolutionDir)\Website\App_Config\Include\Sitecore.Extranet.config"
 copy /Y "$(ProjectDir)\packages\Sitecore.Extranet-package.zip" "$(SolutionDir)\data\packages\Sitecore.Extranet-package.zip"
-start xcopy /Y "$(ProjectDir)\sitecore modules\Sublayouts\*" "$(SolutionDir)\Website\sitecore modules\web\extranet\"
+start xcopy /Y "$(ProjectDir)\sitecore modules\Sublayouts\*.ascx" "$(SolutionDir)\Website\sitecore modules\web\extranet\"
 start xcopy  /S /Y "$(ProjectDir)\sitecore modules\Wizards\*" "$(SolutionDir)\Website\sitecore modules\shell\extranet\wizards\"
 start xcopy  /S /Y "$(ProjectDir)\sitecore modules\Editors\*" "$(SolutionDir)\Website\sitecore modules\shell\extranet\editors\"</PostBuildEvent>
   </PropertyGroup>
