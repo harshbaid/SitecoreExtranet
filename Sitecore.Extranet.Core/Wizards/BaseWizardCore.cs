@@ -249,7 +249,8 @@ namespace Sitecore.Extranet.Core.Wizards {
 
 		protected override void OnCancel(object sender, EventArgs formEventArgs) {
 			if (this.Active == LastPage) {
-				Windows.Close();
+				//Windows.Close();
+                //TODO: resolve above api call
 			} else {
 				Context.ClientPage.Start(this, "Confirmation");
 			}
@@ -260,9 +261,10 @@ namespace Sitecore.Extranet.Core.Wizards {
 				Context.ClientPage.ClientResponse.Confirm("Are you sure you want to close the wizard?");
 				args.Suspend(true);
 			} else if (args.Result == "yes") {
-				Windows.Close();
-			}
-		}
+                //Windows.Close();
+                //TODO: resolve above api call
+            }
+        }
 
 		#endregion Cancel Wizard
 	}

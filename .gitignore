@@ -2,3 +2,10 @@
 *.user
 bin
 obj
+*.sqlite
+*.json
+Sitecore.Extranet.Core/.vs/config/applicationhost.config
+*.nupkg
+*.dll
+*.pdb
+packages/

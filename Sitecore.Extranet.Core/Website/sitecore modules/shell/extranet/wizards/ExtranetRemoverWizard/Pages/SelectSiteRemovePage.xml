@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<control xmlns:def="Definition" xmlns:content="http://www.sitecore.net/content">
+	<SelectSiteRemovePage def:inherits="Sitecore.Extranet.Core.Wizards.ExtranetRemoverWizard.Pages.SelectSiteRemovePage,Sitecore.Extranet.Core">
+		<GridPanel Width="100%" Style="display:none">
+			<SCEWizardPageHeader GridPanel.Class="scWizardHeader" Header="$Header" Text="$Text" Icon="$Icon"/>
+			<SCEWizardPageDivider/>
+
+			<Groupbox Header="Site">
+				<GridPanel Columns="2">
+					<Label For="SiteItem">
+						<span class="asterisk">*</span>Choose a Site:
+					</Label>
+					<Combobox ID="SiteItem" ToolTip="Selects the site that will have the extranet security removed." />
+
+					<Label For="RemoveRole">Do you want the extranet role removed?: </Label>
+					<Checkbox ID="RemoveRole" Class="checkbox" ToolTip="Will remove the role used by the extranet."/>
+
+					<Label For="RemoveUsers">Do you want the extranet users removed?: </Label>
+					<Checkbox ID="RemoveUsers" Class="checkbox" ToolTip="Will remove the users used by the extranet."/>
+				</GridPanel>
+			</Groupbox>
+
+		</GridPanel>
+	</SelectSiteRemovePage>
+</control>

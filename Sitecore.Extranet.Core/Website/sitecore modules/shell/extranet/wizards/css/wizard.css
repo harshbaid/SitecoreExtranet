@@ -1,0 +1,22 @@
+﻿.scBottomEdge,
+.scTopEdge { display:block; }
+.scDivider { }
+	.scDivider tr { height:1px; display:block; }
+fieldset { margin: 10px 10px; }
+	fieldset td { vertical-align:top; }
+fieldset tr { margin-bottom:7px; display:block; }
+fieldset label { width:140px; display:block; text-align:right; margin-right:10px; line-height:20px; }
+fieldset input { width:200px; }
+fieldset select { width:305px; }
+fieldset input.checkbox { width:auto; }
+select#LanguageList { height:50px; }
+.scWizardHeader { height:64px; }
+span.asterisk { color:#ff0000; display:inline-block; margin-right:3px; }
+span.value { color:#ff0000; }
+.scWizardText { margin-left:10px !important; }
+.scComboboxEdit { width: 280px; }
+	fieldset .scCombobox tr { margin-bottom: 0px; }
+.ErrorMessage { padding:4px; display:block; line-height:17px; }
+#ProcessDetails { text-align: center; width: 425px; }
+	#ProcessDetails td { padding:5px; }
+	#ProcessDetails div { display:inline-block; margin-left:20px; vertical-align:middle; width:162px; }

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<control xmlns:def="Definition" xmlns:content="http://www.sitecore.net/content">
+	<SCEWizardPageHeader>
+		<GridPanel Columns="2">
+			<Border GridPanel.Width="100%" GridPanel.VAlign="top">
+				<Border Class="scWizardTitle">
+					<Literal Text="$Header"/>
+				</Border>
+				<Border Class="scWizardText">
+					<Literal Text="$Text"/>
+				</Border>
+			</Border>
+			<ThemedImage Src="$Icon" Width="32" Height="32" Margin="0px 8px 0px 0px"/>
+		</GridPanel>
+	</SCEWizardPageHeader>
+</control>

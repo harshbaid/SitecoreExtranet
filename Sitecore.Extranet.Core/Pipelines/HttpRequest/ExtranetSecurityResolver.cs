@@ -1,7 +1,4 @@
-﻿using System;
-using System.Web;
-using Sitecore;
-using Sitecore.Data.Items;
+﻿using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Globalization;
 using Sitecore.IO;
@@ -11,11 +8,15 @@ using Sitecore.Security.Accounts;
 using Sitecore.SecurityModel;
 using Sitecore.Sites;
 using Sitecore.Web;
-using Sitecore.Extranet.Core.Utility;
+using System;
+using System.Web;
 
-namespace Sitecore.Extranet.Core.Pipelines.HttpRequest {
-	public class ExtranetSecurityResolver : HttpRequestProcessor {
-        public override void Process(HttpRequestArgs args) {
+namespace Sitecore.Extranet.Core.Pipelines.HttpRequest
+{
+    public class ExtranetSecurityResolver : HttpRequestProcessor
+    {
+        public override void Process(HttpRequestArgs args)
+        {
             //don't do backend
             if (Sitecore.Context.Domain.Name.ToLower().Contains("sitecore") || !Sitecore.Context.PageMode.IsNormal)
                 return;
@@ -37,47 +38,58 @@ namespace Sitecore.Extranet.Core.Pipelines.HttpRequest {
 
             // Get the item using securityDisabler for restricted items such as permission denied items
             Item contextItem = null;
-            using (new SecurityDisabler()) {
+            using (new SecurityDisabler())
+            {
                 if (Context.Database == null || args.Url.ItemPath.Length == 0)
                     return;
 
                 string path = MainUtil.DecodeName(args.Url.ItemPath);
                 Item item = args.GetItem(path);
-                if (item == null) {
+                if (item == null)
+                {
                     path = args.LocalPath;
                     item = args.GetItem(path);
                 }
-                if (item == null) {
+                if (item == null)
+                {
                     path = MainUtil.DecodeName(args.LocalPath);
                     item = args.GetItem(path);
                 }
                 string str2 = (site != null) ? site.RootPath : string.Empty;
-                if (item == null) {
+                if (item == null)
+                {
                     path = FileUtil.MakePath(str2, args.LocalPath, '/');
                     item = args.GetItem(path);
                 }
-                if (item == null) {
+                if (item == null)
+                {
                     path = MainUtil.DecodeName(FileUtil.MakePath(str2, args.LocalPath, '/'));
                     item = args.GetItem(path);
                 }
-                if (item == null) {
+                if (item == null)
+                {
                     Item root = ItemManager.GetItem(site.RootPath, Language.Current, Sitecore.Data.Version.Latest, Context.Database, SecurityCheck.Disable);
-                    if (root != null) {
+                    if (root != null)
+                    {
                         string path2 = MainUtil.DecodeName(args.LocalPath);
                         item = this.GetSubItem(path2, root);
                     }
                 }
-                if (item == null) {
+                if (item == null)
+                {
                     int index = args.Url.ItemPath.IndexOf('/', 1);
-                    if (index >= 0) {
+                    if (index >= 0)
+                    {
                         Item root = ItemManager.GetItem(args.Url.ItemPath.Substring(0, index), Language.Current, Sitecore.Data.Version.Latest, Context.Database, SecurityCheck.Disable);
-                        if (root != null) {
+                        if (root != null)
+                        {
                             string path3 = MainUtil.DecodeName(args.Url.ItemPath.Substring(index));
                             item = this.GetSubItem(path3, root);
                         }
                     }
                 }
-                if (((item == null) && args.UseSiteStartPath) && (site != null)) {
+                if (((item == null) && args.UseSiteStartPath) && (site != null))
+                {
                     item = args.GetItem(site.StartPath);
                 }
                 contextItem = item;
@@ -98,9 +110,11 @@ namespace Sitecore.Extranet.Core.Pipelines.HttpRequest {
                 WebUtil.Redirect(string.Format("{0}?returnUrl={1}", site.LoginPage, rawURL));
         }
 
-        private Item GetSubItem(string path, Item root) {
+        private Item GetSubItem(string path, Item root)
+        {
             Item child = root;
-            foreach (string str in path.Split(new char[] { '/' })) {
+            foreach (string str in path.Split(new char[] { '/' }))
+            {
                 if (str.Length == 0)
                     continue;
 
@@ -111,8 +125,10 @@ namespace Sitecore.Extranet.Core.Pipelines.HttpRequest {
             return child;
         }
 
-        private Item GetChild(Item item, string itemName) {
-            foreach (Item item2 in item.Children) {
+        private Item GetChild(Item item, string itemName)
+        {
+            foreach (Item item2 in item.Children)
+            {
                 if (item2.DisplayName.Equals(itemName, StringComparison.OrdinalIgnoreCase))
                     return item2;
 
@@ -121,5 +137,5 @@ namespace Sitecore.Extranet.Core.Pipelines.HttpRequest {
             }
             return null;
         }
-	}
+    }
 }

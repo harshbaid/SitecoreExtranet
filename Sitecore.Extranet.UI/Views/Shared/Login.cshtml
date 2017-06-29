@@ -1,0 +1,30 @@
+﻿@using Sitecore.Mvc
+@using System.Web.Optimization
+@model Sitecore.Extranet.UI.Models.UserModel
+
+@if (Model.LoginPanelVisible)
+{
+    <div class="container">
+        <div class="form-signin">
+            <h2 class="form-signin-heading">Login</h2>
+            <sc:FieldRenderer runat="server" ID="contentField" FieldName="Content" />
+            <div class="required">
+                @Model.Message
+            </div>
+            <label class="sr-only">Username</label>
+            <asp:TextBox ID="txtUser" runat="server" CssClass="form-control" placeholder="Username" required autofocus />
+            <asp:RequiredFieldValidator ControlToValidate="txtUser" runat="server" ValidationGroup="ExtranetLogin"></asp:RequiredFieldValidator>
+
+            <label class="sr-only">Password</label>
+            <asp:TextBox ID="txtPass" TextMode="Password" runat="server" placeholder="Password" required CssClass="form-control" />
+            <asp:RequiredFieldValidator ControlToValidate="txtUser" runat="server" ValidationGroup="ExtranetLogin"></asp:RequiredFieldValidator>
+
+            <asp:Button ID="btnSubmit" ValidationGroup="ExtranetLogin" OnClick="ProcessLogin" runat="server" CssClass="btn btn-lg btn-primary btn-block" />
+        </div>
+    </div>
+}
+
+@if (Model.LoggedInPanelVisible)
+{
+    <sc:Placeholder Key="logincontent" runat="server" />
+}

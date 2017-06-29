@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sitecore.Extranet.UI</RootNamespace>
     <AssemblyName>Sitecore.Extranet.UI</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,13 +32,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Sitecore.Kernel">
-      <HintPath>..\..\..\testsite-sc-7.1\Website\bin\Sitecore.Kernel.dll</HintPath>
+      <HintPath>..\..\..\..\inetpub\wwwroot\authdemo\Website\bin\Sitecore.Kernel.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Mvc">
+      <HintPath>..\..\..\..\inetpub\wwwroot\authdemo\Website\bin\Sitecore.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\..\..\..\inetpub\wwwroot\authdemo\Website\bin\System.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="sitecore modules\Editors\Settings.aspx.cs">
       <DependentUpon>Settings.aspx</DependentUpon>
@@ -144,6 +152,9 @@
   <ItemGroup>
     <None Include="App_Config\Include\Sitecore.Extranet.config" />
     <None Include="packages\Sitecore.Extranet-package.zip" />
+    <None Include="Views\Layouts\Main.cshtml" />
+    <None Include="Views\Web.config" />
+    <None Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sitecore.Extranet.Core\Sitecore.Extranet.Core.csproj">
@@ -152,13 +163,17 @@
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Views\Shared\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy /Y "$(ProjectDir)\App_Config\Include\Sitecore.Extranet.config" "$(SolutionDir)\Website\App_Config\Include\Sitecore.Extranet.config"
-copy /Y "$(ProjectDir)\packages\Sitecore.Extranet-package.zip" "$(SolutionDir)\data\packages\Sitecore.Extranet-package.zip"
-start xcopy /Y "$(ProjectDir)\sitecore modules\Sublayouts\*.ascx" "$(SolutionDir)\Website\sitecore modules\web\extranet\"
-start xcopy  /S /Y "$(ProjectDir)\sitecore modules\Wizards\*" "$(SolutionDir)\Website\sitecore modules\shell\extranet\wizards\"
-start xcopy  /S /Y "$(ProjectDir)\sitecore modules\Editors\*" "$(SolutionDir)\Website\sitecore modules\shell\extranet\editors\"</PostBuildEvent>
+    <PostBuildEvent>REM copy /Y "$(ProjectDir)\App_Config\Include\Sitecore.Extranet.config" "$(SolutionDir)\Website\App_Config\Include\Sitecore.Extranet.config"
+REM copy /Y "$(ProjectDir)\packages\Sitecore.Extranet-package.zip" "$(SolutionDir)\data\packages\Sitecore.Extranet-package.zip"
+REM start xcopy /Y "$(ProjectDir)\sitecore modules\Sublayouts\*.ascx" "$(SolutionDir)\Website\sitecore modules\web\extranet\"
+REM start xcopy  /S /Y "$(ProjectDir)\sitecore modules\Wizards\*" "$(SolutionDir)\Website\sitecore modules\shell\extranet\wizards\"
+REM start xcopy  /S /Y "$(ProjectDir)\sitecore modules\Editors\*" "$(SolutionDir)\Website\sitecore modules\shell\extranet\editors\"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
